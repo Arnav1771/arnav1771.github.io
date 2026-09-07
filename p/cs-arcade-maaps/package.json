@@ -1,0 +1,17 @@
+{
+  "name": "com.arcade.3draycaster",
+  "version": "1.0.0",
+  "description": "3D Raycaster \u2014 Official Arcade Mobile Game Edition",
+  "main": "index.html",
+  "scripts": {
+    "cap:sync": "cap sync",
+    "cap:android": "cap open android",
+    "cap:ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0"
+  }
+}

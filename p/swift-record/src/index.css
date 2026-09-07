@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles can be added here */
+/* For example, to override Tailwind defaults or add specific component styles */
+
+/* Example: Custom scrollbar styles for webkit browsers */
+/* This ensures a consistent look across the application */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b; /* slate-800 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569; /* slate-600 */
+  border-radius: 10px;
+  border: 2px solid #1e293b; /* slate-800 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b; /* slate-500 */
+}
+
+/* Example: Focus ring customization */
+/* Ensuring accessibility and better visual feedback */
+*:focus-visible {
+  outline: 2px solid #3b82f6; /* blue-500 */
+  outline-offset: 2px;
+  border-radius: 4px; /* Match typical button/input border-radius */
+}
+
+/* Example: Global font smoothing for better text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* You might want to define custom utility classes here if they are not covered by Tailwind */
+/* For instance, a custom gradient background or specific animation */
+
+/* Example: Custom gradient background for a specific element */
+/* .bg-gradient-custom {
+  background: linear-gradient(to right, #6366f1, #a855f7);
+} */
+
+/* Example: Custom animation */
+/* @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+} */
+
+/* This is a web page, not a fixed desktop window.
+   These rules previously carried the Tauri convention -- height:100% plus
+   overflow:hidden, on the assumption the app scrolls its own panes. Served in a
+   browser that made the page simply unscrollable: the layout is min-h-screen and
+   grows past the viewport, so everything below the fold was unreachable.
+   The document scrolls normally now. */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Basic styling for the main app container if needed */
+/* This is often handled by a top-level component in React with Tailwind classes */
+/* #root {
+  @apply bg-gray-900 text-gray-100;
+} */

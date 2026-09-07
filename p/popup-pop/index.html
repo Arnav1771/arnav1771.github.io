@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CmdPop — your terminal remembers. Now it answers.</title>
+<meta name="description" content="CmdPop is a cross-platform floating picker for your terminal command history. Fuzzy-search every command you've ever run — bash, zsh, fish, PowerShell — and inject it back with one keystroke.">
+<style>
+  :root{
+    --ink:#0E1420;
+    --panel:#151D2E;
+    --panel2:#1B2436;
+    --line:#2A3550;
+    --phosphor:#FFB454;
+    --phosphor-dim:#8A6420;
+    --text:#E9E4D6;
+    --muted:#93A0B6;
+    --shell:#7FB4E8;
+    --mono:ui-monospace,"Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--phosphor);color:var(--ink)}
+  a{color:var(--phosphor);text-decoration:none}
+  a:hover{text-decoration:underline}
+  a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
+    outline:2px solid var(--phosphor);outline-offset:3px;border-radius:2px
+  }
+  kbd{
+    font-family:var(--mono);font-size:.82em;
+    background:var(--panel2);border:1px solid var(--line);
+    border-bottom-width:2px;border-radius:5px;padding:.1em .5em;
+    white-space:nowrap;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .eyebrow{
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.08em;
+    color:var(--phosphor);margin-bottom:14px;
+  }
+  .eyebrow::before{content:"~$ ";color:var(--muted)}
+
+  /* ── header ─────────────────────────────────── */
+  header{
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;background:rgba(14,20,32,.92);
+    backdrop-filter:blur(8px);z-index:10;
+  }
+  .nav{display:flex;align-items:center;gap:28px;height:60px}
+  .brand{font-family:var(--mono);font-weight:700;font-size:1.05rem;color:var(--text)}
+  .brand em{color:var(--phosphor);font-style:normal}
+  .nav .links{margin-left:auto;display:flex;gap:22px;font-size:.92rem}
+  .nav .links a{color:var(--muted)}
+  .nav .links a:hover{color:var(--text);text-decoration:none}
+
+  /* ── hero ───────────────────────────────────── */
+  .hero{padding:72px 0 30px;text-align:center}
+  .hero h1{
+    font-family:var(--mono);
+    font-size:clamp(1.7rem,4.6vw,3.1rem);
+    font-weight:700;line-height:1.18;letter-spacing:-.01em;
+    max-width:21ch;margin:0 auto;
+  }
+  .hero h1 .dim{color:var(--muted)}
+  .hero h1 .amber{color:var(--phosphor)}
+  .hero p.sub{
+    color:var(--muted);max-width:52ch;margin:22px auto 0;font-size:1.06rem;
+  }
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:32px 0 8px}
+  .btn{
+    font-family:var(--mono);font-size:.95rem;font-weight:600;
+    padding:11px 22px;border-radius:8px;border:1px solid var(--line);
+    color:var(--text);display:inline-block;
+  }
+  .btn:hover{text-decoration:none;border-color:var(--phosphor-dim)}
+  .btn.primary{background:var(--phosphor);border-color:var(--phosphor);color:var(--ink)}
+  .btn.primary:hover{background:#FFC26E}
+
+  /* ── the demo: a picker floating over a terminal ── */
+  .stage{margin:56px auto 0;max-width:860px;position:relative;text-align:left}
+  .stage-hint{
+    text-align:center;font-family:var(--mono);font-size:.78rem;
+    color:var(--muted);margin-bottom:14px;
+  }
+  .term{
+    background:#0A0F19;border:1px solid var(--line);border-radius:12px;
+    font-family:var(--mono);font-size:.88rem;line-height:1.75;
+    padding:0 0 18px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:11px 16px;border-bottom:1px solid var(--line);
+    background:var(--panel);
+  }
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--line)}
+  .term-title{margin:0 auto;font-size:.75rem;color:var(--muted)}
+  .term-body{padding:16px 20px 0;color:var(--muted);min-height:120px}
+  .term-body .ps1{color:var(--shell)}
+  .term-body .typed{color:var(--text)}
+  .caret{
+    display:inline-block;width:.55em;height:1.05em;
+    background:var(--phosphor);vertical-align:text-bottom;
+    animation:blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0}}
+
+  .picker{
+    position:relative;margin:-46px auto 0;width:min(92%,560px);
+    background:var(--panel);border:1px solid var(--phosphor-dim);
+    border-radius:12px;font-family:var(--mono);font-size:.85rem;
+    box-shadow:0 24px 70px rgba(0,0,0,.6);
+    transform:translateY(-38px);
+  }
+  .picker-search{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 16px;border-bottom:1px solid var(--line);color:var(--text);
+  }
+  .picker-search .prompt{color:var(--phosphor)}
+  .picker-list{list-style:none;max-height:238px;overflow:hidden;padding:6px 0}
+  .picker-list li{
+    display:flex;align-items:center;gap:10px;
+    padding:5px 16px;color:var(--text);white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis;
+  }
+  .picker-list li .star{width:1em;color:var(--phosphor)}
+  .picker-list li .cmd{overflow:hidden;text-overflow:ellipsis}
+  .picker-list li .tag{
+    margin-left:auto;font-size:.72rem;color:var(--shell);
+    border:1px solid var(--line);border-radius:4px;padding:0 6px;flex:none;
+  }
+  .picker-list li .age{font-size:.72rem;color:var(--muted);flex:none}
+  .picker-list li.sel{background:var(--panel2);box-shadow:inset 3px 0 0 var(--phosphor)}
+  .picker-list li.empty{color:var(--muted);font-style:italic}
+  .picker-foot{
+    display:flex;gap:16px;padding:9px 16px;border-top:1px solid var(--line);
+    font-size:.72rem;color:var(--muted);flex-wrap:wrap;
+  }
+  .picker-foot b{color:var(--phosphor);font-weight:600}
+
+  /* ── sections ───────────────────────────────── */
+  section{padding:84px 0;border-top:1px solid var(--line)}
+  section h2{
+    font-family:var(--mono);font-size:1.55rem;font-weight:700;
+    letter-spacing:-.01em;margin-bottom:10px;
+  }
+  section .lead{color:var(--muted);max-width:60ch;margin-bottom:40px}
+
+  /* pipeline — a real sequence */
+  .pipeline{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px}
+  .step .n{
+    font-family:var(--mono);color:var(--phosphor);font-size:.8rem;
+    display:block;margin-bottom:12px;
+  }
+  .step h3{font-family:var(--mono);font-size:1.02rem;margin-bottom:8px}
+  .step p{color:var(--muted);font-size:.94rem}
+  .step code{font-family:var(--mono);color:var(--text);font-size:.85em}
+
+  /* features */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .cell{background:var(--ink);padding:26px}
+  .cell h3{font-family:var(--mono);font-size:.98rem;margin-bottom:8px;color:var(--phosphor)}
+  .cell p{color:var(--muted);font-size:.93rem}
+
+  /* shells table */
+  table{width:100%;border-collapse:collapse;font-size:.93rem}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
+  th{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;color:var(--muted);font-weight:600}
+  td:first-child{font-family:var(--mono)}
+  .ok{color:var(--phosphor)}
+  .table-scroll{overflow-x:auto}
+
+  /* keys */
+  .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .key-row{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:13px 16px;font-size:.9rem;
+  }
+  .key-row span{color:var(--muted)}
+
+  /* install */
+  .install-block{
+    background:#0A0F19;border:1px solid var(--line);border-radius:12px;
+    font-family:var(--mono);font-size:.87rem;padding:20px 22px;
+    overflow-x:auto;margin-bottom:14px;
+  }
+  .install-block .c{color:var(--muted)}
+  .install-block .p{color:var(--shell)}
+
+  footer{
+    border-top:1px solid var(--line);padding:36px 0;color:var(--muted);
+    font-size:.88rem;display:block;
+  }
+  footer .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+
+  @media (max-width:820px){
+    .pipeline,.grid{grid-template-columns:1fr}
+    .hero{padding-top:52px}
+    section{padding:62px 0}
+    .picker{transform:translateY(-24px);margin-bottom:-10px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .caret{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <span class="brand"><em>▸</em> cmdpop</span>
+    <nav class="links" aria-label="Site">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#shells">Shells</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/Arnav1771/Popup_pop">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <p class="eyebrow">history | fuzzy | inject</p>
+    <h1>Your terminal <span class="dim">remembers.</span><br>Now it <span class="amber">answers.</span></h1>
+    <p class="sub">CmdPop is a floating picker for your command history — like Win+V, but for the terminal. It reads bash, zsh, fish and PowerShell history directly, with zero shell plugins, and types the command you pick straight back into your prompt.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#install">Install CmdPop</a>
+      <a class="btn" href="https://github.com/Arnav1771/Popup_pop/releases">Download release</a>
+    </div>
+
+    <div class="stage">
+      <p class="stage-hint" id="hint">this demo is live — click it, type to filter, ↑↓ to move, Enter to inject</p>
+      <div class="term" aria-label="Terminal demo">
+        <div class="term-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="term-title">zsh — ~/projects/api</span>
+        </div>
+        <div class="term-body">
+          <div><span class="ps1">➜ api</span> <span class="typed" id="injected"></span><span class="caret" id="caret"></span></div>
+        </div>
+      </div>
+
+      <div class="picker" id="picker" tabindex="0" role="application" aria-label="CmdPop picker demo. Type to filter, arrow keys to navigate, Enter to inject.">
+        <div class="picker-search">
+          <span class="prompt">⌕</span>
+          <span id="query"></span><span class="caret"></span>
+        </div>
+        <ul class="picker-list" id="list"></ul>
+        <div class="picker-foot">
+          <span><b>enter</b> insert</span>
+          <span><b>↑↓</b> navigate</span>
+          <span><b>^f</b> favorite ★</span>
+          <span><b>^d</b> delete</span>
+          <span><b>esc</b> close</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="how">
+    <div class="wrap">
+      <p class="eyebrow">cmdpop start</p>
+      <h2>One pipeline, three verbs</h2>
+      <p class="lead">CmdPop never hooks your shell. It reads the history files your shells already write, keeps one deduplicated database, and puts keystrokes back into whatever terminal you're focused on.</p>
+      <div class="pipeline">
+        <div class="step">
+          <span class="n">step 1 — read</span>
+          <h3>Read every history file</h3>
+          <p>Native parsers for <code>.bash_history</code> (with timestamps), zsh <code>EXTENDED_HISTORY</code> and multi-line commands, fish's YAML log, PSReadLine, and Clink. No plugins, no RC edits.</p>
+        </div>
+        <div class="step">
+          <span class="n">step 2 — store</span>
+          <h3>Deduplicate into SQLite</h3>
+          <p>One local database at <code>~/.cmdpop/history.db</code>. Run counts, last-used times, favorites. Commands containing <code>password</code>, <code>token</code>, <code>secret</code>… are never stored.</p>
+        </div>
+        <div class="step">
+          <span class="n">step 3 — inject</span>
+          <h3>Type it back for you</h3>
+          <p>Hit <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>H</kbd> anywhere, fuzzy-find, press Enter. CmdPop injects the command into your active terminal via SendKeys, xdotool/ydotool, or AppleScript — clipboard as a last resort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <p class="eyebrow">--features</p>
+      <h2>Small tool, sharp edges filed off</h2>
+      <p class="lead">Version 0.1.1 ships with 115 automated tests, an 81% coverage gate in CI, and strict typing across the codebase.</p>
+      <div class="grid">
+        <div class="cell"><h3>Fuzzy search</h3><p>RapidFuzz scoring that's word-order-agnostic and substring-friendly — <em>"git amend"</em> finds <code style="font-family:var(--mono)">git commit --amend</code>.</p></div>
+        <div class="cell"><h3>Fully offline</h3><p>No network calls, no telemetry, no cloud. Your history stays in one SQLite file you own.</p></div>
+        <div class="cell"><h3>Secrets filtered</h3><p>Configurable exclude patterns drop sensitive commands before they ever touch the database.</p></div>
+        <div class="cell"><h3>Favorites &amp; recency</h3><p>Star the commands you live by; everything else sorts by score, then by when you last ran it.</p></div>
+        <div class="cell"><h3>Keyboard-only</h3><p>Search, navigate, favorite, delete and insert without leaving the home row — even while typing in the search box.</p></div>
+        <div class="cell"><h3>One config file</h3><p><code style="font-family:var(--mono)">~/.cmdpop/config.toml</code> — hotkey, popup size, exclude patterns. Sensible defaults, zero setup.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="shells">
+    <div class="wrap">
+      <p class="eyebrow">echo $SHELL</p>
+      <h2>Every shell you actually use</h2>
+      <p class="lead">History support is a parser, not an integration — adding a shell means one small reader class.</p>
+      <div class="table-scroll">
+      <table>
+        <thead><tr><th>Shell</th><th>Platforms</th><th>Source</th><th>Support</th></tr></thead>
+        <tbody>
+          <tr><td>bash</td><td>Linux · macOS · WSL</td><td>~/.bash_history</td><td class="ok">✓ full, with timestamps</td></tr>
+          <tr><td>zsh</td><td>Linux · macOS</td><td>~/.zsh_history</td><td class="ok">✓ full, EXTENDED_HISTORY + multi-line</td></tr>
+          <tr><td>fish</td><td>Linux · macOS</td><td>fish_history</td><td class="ok">✓ full, with timestamps</td></tr>
+          <tr><td>PowerShell</td><td>Windows · Linux · macOS</td><td>PSReadLine ConsoleHost_history</td><td class="ok">✓ full</td></tr>
+          <tr><td>CMD</td><td>Windows</td><td>Clink .history</td><td>△ requires Clink</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="keys">
+    <div class="wrap">
+      <p class="eyebrow">man cmdpop</p>
+      <h2>The whole manual fits here</h2>
+      <p class="lead">Every shortcut works while you're typing in the search box.</p>
+      <div class="keys">
+        <div class="key-row"><span>Open picker (daemon)</span><span><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>H</kbd></span></div>
+        <div class="key-row"><span>Navigate results</span><span><kbd>↑</kbd> <kbd>↓</kbd></span></div>
+        <div class="key-row"><span>Insert command</span><span><kbd>Enter</kbd></span></div>
+        <div class="key-row"><span>Toggle favorite ★</span><span><kbd>Ctrl</kbd>+<kbd>F</kbd></span></div>
+        <div class="key-row"><span>Delete from history</span><span><kbd>Ctrl</kbd>+<kbd>D</kbd></span></div>
+        <div class="key-row"><span>Close</span><span><kbd>Esc</kbd></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <p class="eyebrow">pip install</p>
+      <h2>Install in under a minute</h2>
+      <p class="lead">Python 3.11+ on Windows, macOS, or Linux. Grab the wheel from the latest GitHub release, or install from source.</p>
+      <div class="install-block">
+<span class="c"># from the GitHub release wheel</span>
+<div><span class="p">$</span> pip install https://github.com/Arnav1771/Popup_pop/releases/latest/download/cmdpop-0.1.1-py3-none-any.whl</div>
+<br>
+<span class="c"># or from source</span>
+<div><span class="p">$</span> git clone https://github.com/Arnav1771/Popup_pop.git &amp;&amp; cd Popup_pop &amp;&amp; pip install .</div>
+<br>
+<span class="c"># then</span>
+<div><span class="p">$</span> cmdpop sync   <span class="c"># import your history</span></div>
+<div><span class="p">$</span> cmdpop open   <span class="c"># open the picker</span></div>
+<div><span class="p">$</span> cmdpop start  <span class="c"># or run the global-hotkey daemon</span></div>
+      </div>
+      <p style="color:var(--muted);font-size:.9rem">MIT licensed. Issues and PRs welcome on <a href="https://github.com/Arnav1771/Popup_pop">GitHub</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><span style="color:var(--phosphor)">▸</span> cmdpop v0.1.1 — your terminal remembers.</span>
+    <span><a href="https://github.com/Arnav1771/Popup_pop">Source</a> · <a href="https://github.com/Arnav1771/Popup_pop/releases">Releases</a> · MIT</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var HISTORY=[
+    {c:"docker compose up -d",s:"zsh",a:"2m",f:true},
+    {c:"git commit -m 'feat: add fuzzy search'",s:"zsh",a:"9m",f:false},
+    {c:"kubectl logs -f deploy/api",s:"bash",a:"14m",f:false},
+    {c:"npm run dev",s:"zsh",a:"31m",f:true},
+    {c:"python -m pytest tests/ -v",s:"bash",a:"1h",f:false},
+    {c:"docker ps -a",s:"zsh",a:"2h",f:false},
+    {c:"git push origin main",s:"zsh",a:"3h",f:false},
+    {c:"kubectl get pods -A",s:"bash",a:"5h",f:false},
+    {c:"ssh deploy@prod-01",s:"zsh",a:"1d",f:true},
+    {c:"tar -xzf release.tar.gz",s:"bash",a:"2d",f:false},
+    {c:"Get-ChildItem -Recurse",s:"pwsh",a:"3d",f:false},
+    {c:"cd ~/projects/api",s:"zsh",a:"4d",f:false}
+  ];
+  var picker=document.getElementById("picker"),
+      list=document.getElementById("list"),
+      queryEl=document.getElementById("query"),
+      injected=document.getElementById("injected"),
+      hint=document.getElementById("hint");
+  var query="",sel=0,interacted=false,timers=[];
+
+  function score(cmd,q){
+    cmd=cmd.toLowerCase();q=q.toLowerCase();
+    if(!q)return 1;
+    if(cmd.indexOf(q)>=0)return 100;
+    var i=0;
+    for(var j=0;j<cmd.length&&i<q.length;j++){if(cmd[j]===q[i])i++;}
+    return i===q.length?60:0;
+  }
+  function filtered(){
+    return HISTORY.map(function(h){return{h:h,s:score(h.c,query)};})
+      .filter(function(x){return x.s>0;})
+      .sort(function(a,b){return b.s-a.s;})
+      .map(function(x){return x.h;});
+  }
+  function render(){
+    queryEl.textContent=query;
+    var items=filtered();
+    if(sel>=items.length)sel=Math.max(0,items.length-1);
+    list.innerHTML="";
+    if(!items.length){
+      var li=document.createElement("li");
+      li.className="empty";li.textContent="no matching commands";
+      list.appendChild(li);return;
+    }
+    items.slice(0,8).forEach(function(h,i){
+      var li=document.createElement("li");
+      if(i===sel)li.className="sel";
+      var star=document.createElement("span");star.className="star";star.textContent=h.f?"★":" ";
+      var cmd=document.createElement("span");cmd.className="cmd";cmd.textContent=h.c;
+      var tag=document.createElement("span");tag.className="tag";tag.textContent=h.s2||h.s;
+      var age=document.createElement("span");age.className="age";age.textContent=h.a;
+      li.appendChild(star);li.appendChild(cmd);li.appendChild(tag);li.appendChild(age);
+      li.addEventListener("click",function(){userTouched();sel=i;render();inject();});
+      list.appendChild(li);
+    });
+  }
+  function inject(){
+    var items=filtered();
+    if(!items.length)return;
+    var cmd=items[sel].c,i=0;
+    injected.textContent="";
+    var t=setInterval(function(){
+      injected.textContent=cmd.slice(0,++i);
+      if(i>=cmd.length)clearInterval(t);
+    },18);
+    timers.push(t);
+  }
+  function userTouched(){
+    if(interacted)return;
+    interacted=true;
+    timers.forEach(clearTimeout);timers.forEach(clearInterval);timers=[];
+    hint.textContent="it's yours — type to filter, ↑↓ to move, Enter to inject";
+    query="";sel=0;render();
+  }
+  picker.addEventListener("keydown",function(e){
+    if(e.key==="Tab")return;
+    userTouched();
+    if(e.key==="ArrowDown"){sel=Math.min(sel+1,Math.min(filtered().length,8)-1);}
+    else if(e.key==="ArrowUp"){sel=Math.max(sel-1,0);}
+    else if(e.key==="Enter"){inject();}
+    else if(e.key==="Backspace"){query=query.slice(0,-1);sel=0;}
+    else if(e.key==="Escape"){query="";sel=0;injected.textContent="";}
+    else if(e.key.length===1&&!e.ctrlKey&&!e.metaKey&&!e.altKey){query+=e.key;sel=0;}
+    else return;
+    e.preventDefault();render();
+  });
+  picker.addEventListener("mousedown",function(){picker.focus();});
+
+  /* auto-play: type "docker", walk down, select — pauses forever on interaction */
+  function later(fn,ms){timers.push(setTimeout(fn,ms));}
+  function autoplay(){
+    if(interacted)return;
+    var word="docker",delay=600;
+    word.split("").forEach(function(ch,i){
+      later(function(){if(!interacted){query+=ch;render();}},delay+=170);
+    });
+    later(function(){if(!interacted){sel=1;render();}},delay+=650);
+    later(function(){if(!interacted){sel=0;render();}},delay+=550);
+    later(function(){if(!interacted){inject();}},delay+=600);
+    later(function(){if(!interacted){query="";sel=0;render();autoplay();}},delay+=5200);
+  }
+  render();
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduce)autoplay();
+})();
+</script>
+</body>
+</html>

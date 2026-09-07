@@ -1,0 +1,316 @@
+/* ════════════════════════════════════════════════════════════════
+   Grimoire — design system
+   Dark  = arcane spellbook: deep violet-black, rune-gold + electric-violet,
+           with a spectral-cyan reserved for the architecture conduits.
+   Light = warm vellum with ink. Tokens drive both themes.
+   ════════════════════════════════════════════════════════════════ */
+:root{
+  --font-display:"Fraunces",Georgia,serif;
+  --font-body:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --step--1:clamp(.82rem,.78rem + .2vw,.9rem);
+  --step-0:clamp(1rem,.95rem + .3vw,1.12rem);
+  --step-1:clamp(1.3rem,1.1rem + .8vw,1.6rem);
+  --step-2:clamp(1.7rem,1.3rem + 1.6vw,2.5rem);
+  --step-3:clamp(2.6rem,1.8rem + 3.6vw,4.6rem);
+
+  --sp:1rem; --radius:14px; --maxw:1120px;
+  --ring:0 0 0 3px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+:root[data-theme="dark"]{
+  --bg:#080410; --bg-2:#0f0820; --panel:#150c28; --panel-2:#1d1238;
+  --fg:#ece7f5; --muted:#a99fc4; --line:#2c2044; --line-2:#3a2a5c;
+  --accent:#d4a94a; --accent-2:#8b5cf6; --cyan:#4de0d0; --accent-fg:#080410;
+  --glow:radial-gradient(60% 55% at 50% 0%, rgba(139,92,246,.30), transparent 70%);
+  --card-sheen:linear-gradient(180deg, rgba(255,255,255,.035), transparent 40%);
+  --grain:.05;
+}
+:root[data-theme="light"]{
+  --bg:#faf6ec; --bg-2:#f2ead9; --panel:#fffdf8; --panel-2:#f6efe1;
+  --fg:#211a10; --muted:#6b5f4c; --line:#e4dac4; --line-2:#d8caa8;
+  --accent:#9a6b12; --accent-2:#6d3bd6; --cyan:#0e8f83; --accent-fg:#fffdf8;
+  --glow:radial-gradient(60% 55% at 50% 0%, rgba(109,59,214,.14), transparent 70%);
+  --card-sheen:linear-gradient(180deg, rgba(0,0,0,.02), transparent 40%);
+  --grain:.03;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme]){ color-scheme:light; } }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);
+  font-size:var(--step-0);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%}
+a{color:inherit}
+code{font-family:var(--font-mono);background:color-mix(in oklab,var(--accent-2) 15%,transparent);
+  padding:.12em .4em;border-radius:6px;font-size:.86em}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:1rem;top:1rem;background:var(--accent);color:var(--accent-fg);padding:.5rem .8rem;border-radius:8px;z-index:99}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* type */
+h1,h2,h3{font-family:var(--font-display);line-height:1.04;font-weight:600;letter-spacing:-.015em}
+h1{font-size:var(--step-3);margin:.15em 0}
+h1 em{font-style:italic;color:transparent;background:linear-gradient(100deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text}
+h2{font-size:var(--step-2);margin:.1em 0 .5em}
+h3{font-size:var(--step-1);margin:.2em 0 .3em}
+.eyebrow{font-size:var(--step--1);letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 .3em}
+.eyebrow.center{text-align:center}
+.micro{color:var(--muted);font-size:var(--step--1)}
+
+/* scroll progress */
+.scrollbar{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;pointer-events:none}
+.scrollbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--cyan))}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:1rem;
+  padding:.9rem clamp(1rem,4vw,2.5rem);transition:padding .25s ease,background .25s ease;
+  backdrop-filter:blur(14px);background:color-mix(in oklab,var(--bg) 76%,transparent);border-bottom:1px solid var(--line)}
+.nav.scrolled{padding-block:.55rem;background:color-mix(in oklab,var(--bg) 90%,transparent)}
+.brand{font-family:var(--font-display);font-weight:600;font-size:1.28rem;text-decoration:none;letter-spacing:-.02em}
+.rune{filter:drop-shadow(0 0 8px color-mix(in oklab,var(--accent-2) 65%,transparent))}
+.nav-links{margin-left:auto;display:flex;gap:1.4rem;align-items:center}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;font-size:var(--step--1);position:relative}
+.nav-links a:not(.ghlink)::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:1.5px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:right .25s ease}
+.nav-links a:not(.ghlink):hover::after{right:0}
+.nav-links a:hover{color:var(--fg)}
+.ghlink{color:var(--fg)!important}
+.theme{background:transparent;border:1px solid var(--line);color:var(--fg);width:2.3rem;height:2.3rem;
+  border-radius:50%;cursor:pointer;font-size:1.05rem;transition:border-color .2s,transform .2s}
+.theme:hover{border-color:var(--accent);transform:rotate(20deg)}
+
+/* ── HERO ── */
+.hero{position:relative;max-width:var(--maxw);margin:0 auto;padding:clamp(3rem,7vw,6rem) clamp(1rem,4vw,2.5rem) 3rem;overflow:hidden}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.9}
+.hero-glow{position:absolute;inset:-25% -20% auto;height:75%;background:var(--glow);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.5rem,4vw,3rem);align-items:center}
+.hero-copy h1{margin-top:.1em}
+.lede{max-width:46ch;margin:1.2rem 0;color:var(--muted);font-size:var(--step-1);line-height:1.45}
+.lede strong{color:var(--fg)}
+.cta-row{display:flex;gap:.8rem;flex-wrap:wrap;margin:1.6rem 0 .8rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:600;
+  text-decoration:none;font-size:var(--step-0);border:1px solid transparent;cursor:pointer;
+  transition:transform .15s ease,box-shadow .2s ease,background .2s;font-family:var(--font-body)}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:linear-gradient(100deg,var(--accent),var(--accent-2));color:var(--accent-fg);
+  box-shadow:0 8px 30px -12px color-mix(in oklab,var(--accent-2) 80%,transparent)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 44px -12px color-mix(in oklab,var(--accent-2) 90%,transparent)}
+.btn-ghost{border-color:var(--line-2);color:var(--fg);background:color-mix(in oklab,var(--panel) 55%,transparent)}
+.btn-ghost:hover{border-color:var(--accent)}
+
+/* spell console (hero illustration + reused frame) */
+.console{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line-2);
+  border-radius:16px;overflow:hidden;box-shadow:0 40px 90px -50px rgba(0,0,0,.7),0 0 0 1px color-mix(in oklab,var(--accent-2) 12%,transparent)}
+.console-bar{display:flex;align-items:center;gap:.5rem;padding:.6rem .9rem;background:color-mix(in oklab,var(--bg) 55%,transparent);border-bottom:1px solid var(--line)}
+.console-bar .dot{width:.7rem;height:.7rem;border-radius:50%;background:var(--line-2)}
+.console-bar .dot:first-child{background:#e0685f}.console-bar .dot:nth-child(2){background:var(--accent)}.console-bar .dot:nth-child(3){background:#5fb87a}
+.console-title{margin-left:.4rem;font-family:var(--font-mono);font-size:.78rem;color:var(--muted);letter-spacing:.02em}
+.console-body{font-family:var(--font-mono);font-size:.8rem;line-height:1.65;padding:1rem 1.1rem;min-height:270px;white-space:pre-wrap;color:var(--muted)}
+.console-body .prompt{color:var(--accent-2)}
+.console-body .cmd{color:var(--fg)}
+.console-body .ok{color:var(--accent)}
+.console-body .dim{opacity:.7}
+.console-body .file{color:var(--cyan)}
+.caret{display:inline-block;width:.55ch;background:var(--accent);animation:blink 1s steps(1) infinite;color:transparent}
+@keyframes blink{50%{opacity:0}}
+
+/* ── larger CTAs + trust row (hero-designer structure) ── */
+.btn-lg{padding:.95rem 1.7rem;font-size:calc(var(--step-0) + .04rem);min-height:52px}
+.trust{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;padding:0;margin:1.2rem 0 0}
+.trust li{font-size:var(--step--1);color:var(--muted);border:1px solid var(--line);
+  background:color-mix(in oklab,var(--panel) 55%,transparent);border-radius:999px;padding:.32rem .8rem}
+
+/* ── hero stage: legendary animated mage avatar + conjured console ── */
+.hero-stage{display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.mage{margin:0;width:clamp(200px,26vw,290px);position:relative;filter:drop-shadow(0 24px 40px rgba(0,0,0,.45))}
+.mage-svg{display:block;width:100%;height:auto;overflow:visible}
+.mage-svg text{font-family:var(--font-mono)}
+.mage .console{margin-top:-.5rem}
+
+/* animation targets (fill-box so transforms pivot on their own centre) */
+.mage-figure,.mage-aura,.mage-orb-glow,.mage-ring,.mage-eye,.mage-core,.mage-swirl,.mage-sigil,.mote{transform-box:fill-box;transform-origin:center}
+.mage-figure{animation:mage-float 6s ease-in-out infinite}
+.mage-aura{animation:aura-breathe 7s ease-in-out infinite}
+.mage-circle{animation:disc-pulse 5s ease-in-out infinite}
+.mage-core{animation:orb-pulse 3.2s ease-in-out infinite}
+.mage-orb-glow{animation:orb-glow 3.4s ease-in-out infinite}
+.mage-ring{animation:spin 18s linear infinite}
+.mage-ring.inner{animation:spin 12s linear infinite reverse}
+.mage-swirl{animation:spin 7s linear infinite}
+.mage-orbit{transform-box:view-box;transform-origin:150px 60px;animation:spin 6s linear infinite}
+.mage-eye{animation:eye-blink 5.5s ease-in-out infinite}
+.mage-sigil{animation:sigil-pulse 3.6s ease-in-out infinite}
+.wisp{animation:wisp-sway 5s ease-in-out infinite}
+.mage-wisps .wisp:nth-child(2){animation-duration:6s;animation-delay:-1s}
+.mage-wisps .wisp:nth-child(3){animation-duration:5.4s;animation-delay:-2s}
+.mage-wisps .wisp:nth-child(4){animation-duration:6.6s;animation-delay:-.5s}
+.mage-wisps .wisp:nth-child(5){animation-duration:5.8s;animation-delay:-2.6s}
+.tendril{animation:flow 1.3s linear infinite}
+.mote{opacity:.7;animation:mote-drift 5s ease-in-out infinite}
+.mage-runes .mote:nth-child(2){animation-duration:6.5s;animation-delay:-1.2s}
+.mage-runes .mote:nth-child(3){animation-duration:5.8s;animation-delay:-2.4s}
+.mage-runes .mote:nth-child(4){animation-duration:7s;animation-delay:-.6s}
+.mage-runes .mote:nth-child(5){animation-duration:6s;animation-delay:-3s}
+.mage-runes .mote:nth-child(6){animation-duration:6.2s;animation-delay:-1.8s}
+
+@keyframes mage-float{50%{transform:translateY(-8px)}}
+@keyframes aura-breathe{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
+@keyframes disc-pulse{0%,100%{opacity:.55}50%{opacity:.95}}
+@keyframes orb-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes orb-glow{0%,100%{opacity:.32;transform:scale(1)}50%{opacity:.6;transform:scale(1.18)}}
+@keyframes eye-blink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+@keyframes sigil-pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.14)}}
+@keyframes wisp-sway{50%{transform:translateY(-5px)}}
+@keyframes mote-drift{50%{transform:translateY(-9px);opacity:1}}
+
+/* ── STAT RIBBON ── */
+.stats{max-width:var(--maxw);margin:0 auto;padding:1.5rem clamp(1rem,4vw,2.5rem) 2.5rem;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;text-align:center;
+  border-block:1px solid var(--line);border-image:linear-gradient(90deg,transparent,var(--line-2),transparent) 1}
+.stat .n{display:block;font-family:var(--font-display);font-weight:600;font-size:clamp(2rem,1.4rem+2.4vw,3.2rem);
+  line-height:1;color:transparent;background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text}
+.stat .l{display:block;margin-top:.4rem;color:var(--muted);font-size:var(--step--1);letter-spacing:.02em}
+
+/* ── bands ── */
+section[id]{scroll-margin-top:5rem}
+.band{max-width:var(--maxw);margin:0 auto;padding:clamp(2.8rem,6vw,5.5rem) clamp(1rem,4vw,2.5rem)}
+.band.alt{background:var(--bg-2);max-width:none}
+.band.alt>*{max-width:var(--maxw);margin-inline:auto}
+.band>h2{text-align:center}
+.sub{text-align:center;max-width:64ch;margin:-.2rem auto 2rem;color:var(--muted)}
+.sub strong{color:var(--fg)}
+
+/* ── two-pass pipeline ── */
+.pipeline{list-style:none;padding:0;margin:2.4rem 0 0;display:grid;
+  grid-template-columns:repeat(5,1fr);gap:1rem;position:relative}
+.pipeline::before{content:"";position:absolute;top:2.2rem;left:8%;right:8%;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--accent-2),var(--accent));opacity:.5;z-index:0}
+.stage{position:relative;z-index:1;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.3rem 1.2rem;background-image:var(--card-sheen)}
+.stage .k{display:inline-block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent-fg);background:linear-gradient(100deg,var(--accent),var(--accent-2));padding:.28em .7em;border-radius:999px;margin-bottom:.7rem}
+.stage h3{font-size:1.2rem}
+.stage p{color:var(--muted);margin:.3rem 0 0;font-size:var(--step--1);line-height:1.5}
+
+/* ── architecture figure ── */
+.arch{margin:2.4rem 0 0}
+.arch-scroll{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:
+  radial-gradient(90% 90% at 50% 40%, color-mix(in oklab,var(--panel) 92%,transparent), var(--bg-2));padding:1rem}
+.arch-svg{display:block;width:100%;min-width:720px;height:auto;font-family:var(--font-body)}
+.arch-svg .col-label{fill:var(--muted);font-size:13px;letter-spacing:.22em;text-anchor:middle;font-weight:600}
+.arch-svg .node rect{fill:var(--panel);stroke:var(--line-2);stroke-width:1.4}
+.arch-svg .node text{fill:var(--fg);font-size:15px;text-anchor:middle;font-weight:500}
+.arch-svg .node.soon rect{stroke-dasharray:5 4;opacity:.7}
+.arch-svg .node.soon text{fill:var(--muted)}
+.arch-svg .core rect{fill:url(#g-core);stroke:none}
+.arch-svg .core .core-title{fill:var(--accent-fg);font-family:var(--font-display);font-size:19px;font-weight:600;text-anchor:middle}
+.arch-svg .core .pass{fill:rgba(8,4,16,.34);stroke:rgba(255,255,255,.28);stroke-width:1}
+.arch-svg .core .pass-t{fill:#f4eefc;font-family:var(--font-mono);font-size:12px;text-anchor:middle;font-weight:700}
+.arch-svg .rune-ring{fill:none;stroke:var(--accent-2);stroke-width:1.2;stroke-dasharray:2 10;opacity:.55;
+  transform-box:fill-box;transform-origin:center;animation:spin 26s linear infinite}
+.arch-svg .rune-ring.inner{stroke:var(--accent);stroke-dasharray:1 7;opacity:.4;animation-duration:18s;animation-direction:reverse}
+.arch-svg .out rect{fill:color-mix(in oklab,var(--accent) 14%,var(--panel));stroke:var(--accent)}
+.arch-svg .out .out-t{fill:var(--fg);font-size:16px;font-weight:600;text-anchor:middle}
+.arch-svg .out .out-s{fill:var(--muted);font-size:12px;text-anchor:middle}
+.arch-svg .conduits path{stroke-dasharray:7 9;animation:flow 1.4s linear infinite}
+.arch-svg .providers-in path{stroke:var(--cyan)}
+.arch-svg .surfaces-in path{stroke:var(--accent-2);animation-direction:reverse}
+.arch-svg .repo-out path{stroke:var(--accent);stroke-dasharray:8 8}
+@keyframes flow{to{stroke-dashoffset:-16}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.arch-legend{display:flex;gap:1.4rem;flex-wrap:wrap;justify-content:center;margin-top:1.1rem;color:var(--muted);font-size:var(--step--1)}
+.arch-legend .key{display:inline-block;width:1.4rem;height:.32rem;border-radius:2px;vertical-align:middle;margin-right:.45rem}
+.key-cyan{background:var(--cyan)}.key-violet{background:var(--accent-2)}.key-gold{background:var(--accent)}
+
+/* ── cards / grids ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1.6rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.4rem;position:relative;background-image:var(--card-sheen)}
+.card h3{font-size:1.18rem}
+.card p{color:var(--muted);margin:.2rem 0 0}
+.card p em{color:var(--fg);font-style:normal;font-weight:600}
+/* gradient-border cards */
+.gborder{border:1px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,
+             linear-gradient(130deg,color-mix(in oklab,var(--accent) 55%,transparent),color-mix(in oklab,var(--accent-2) 55%,transparent)) border-box;
+  transition:transform .2s ease,box-shadow .25s ease}
+.gborder:hover{transform:translateY(-4px);box-shadow:0 22px 50px -30px color-mix(in oklab,var(--accent-2) 85%,transparent)}
+.surfaces-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.snip{margin:.9rem 0 0;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;overflow-x:auto}
+.snip code{background:none;padding:0;color:var(--cyan);font-size:.8rem}
+.snip a{color:var(--accent-2);font-weight:600}
+
+/* ── provider matrix ── */
+.matrix{margin-top:1.6rem;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.mrow{display:grid;grid-template-columns:1.1fr 2fr .8fr;gap:1rem;align-items:center;
+  padding:1rem 1.2rem;border-top:1px solid var(--line)}
+.mrow:first-child{border-top:none}
+.mrow.mhead{background:color-mix(in oklab,var(--panel) 70%,transparent);font-size:var(--step--1);
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mp{font-weight:600}
+.mm{display:flex;flex-wrap:wrap;gap:.4rem}
+.mm code{background:color-mix(in oklab,var(--accent) 12%,transparent);color:var(--fg);font-size:.76rem}
+.badge{font-style:normal;font-size:.72rem;font-weight:700;padding:.25em .7em;border-radius:999px;letter-spacing:.03em}
+.badge.live{background:color-mix(in oklab,var(--cyan) 22%,transparent);color:var(--cyan);border:1px solid color-mix(in oklab,var(--cyan) 45%,transparent)}
+.badge.soon{background:color-mix(in oklab,var(--muted) 16%,transparent);color:var(--muted);border:1px solid var(--line-2)}
+
+/* ── try-it (working generator) ── */
+.try .sub strong{color:var(--fg)}
+.console-frame{max-width:720px;margin:0 auto;background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line-2);border-radius:18px;overflow:hidden;
+  box-shadow:0 40px 90px -50px rgba(0,0,0,.65),0 0 0 1px color-mix(in oklab,var(--accent-2) 12%,transparent)}
+.panel{padding:clamp(1.2rem,3vw,2rem)}
+.field{margin-bottom:1rem;display:flex;flex-direction:column;gap:.4rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+label{font-weight:600;font-size:var(--step--1)}
+.hint{color:var(--muted);font-weight:400}
+input,select,textarea{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;width:100%}
+textarea{resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:var(--ring)}
+.actions{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:.4rem}
+.remember{display:flex;align-items:center;gap:.5rem;font-weight:400;color:var(--muted);font-size:var(--step--1)}
+.remember input{width:auto}
+
+/* ── output log ── */
+.output{max-width:720px;margin:1.4rem auto 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.2rem;font-size:var(--step--1)}
+.output .log{font-family:var(--font-mono);white-space:pre-wrap;color:var(--muted);max-height:280px;overflow:auto;margin:0;line-height:1.6}
+.output .ok{color:var(--accent)}
+.output .err{color:#ef6a6a}
+.output a{color:var(--accent-2);font-weight:600}
+.spinner{display:inline-block;width:1em;height:1em;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px}
+
+/* ── cta / footer ── */
+.cta-band{text-align:center}
+.cta-band h2{max-width:22ch;margin-inline:auto}
+.cta-band .cta-row{justify-content:center}
+.foot{border-top:1px solid var(--line);padding:2.2rem clamp(1rem,4vw,2.5rem);text-align:center;color:var(--muted)}
+.foot a{color:var(--accent-2)}
+
+/* ── motion ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(3,1fr);row-gap:1.5rem}
+  .pipeline{grid-template-columns:repeat(2,1fr)}
+  .pipeline::before{display:none}
+}
+@media (max-width:560px){
+  .row{grid-template-columns:1fr}
+  .nav-links a:not(.ghlink){display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .pipeline{grid-template-columns:1fr}
+  .mrow{grid-template-columns:1fr;gap:.5rem}
+  .mrow.mhead{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  .arch-svg .conduits path,.arch-svg .rune-ring,.caret,.spinner,
+  .mage-figure,.mage-aura,.mage-circle,.mage-orb-glow,.mage-ring,.mage-eye,.mage-core,
+  .mage-swirl,.mage-orbit,.mage-sigil,.wisp,.tendril,.mote{animation:none}
+  .arch-svg .conduits path{stroke-dasharray:none;opacity:.6}
+}

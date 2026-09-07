@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Third Eye — A Romance Visual Novel at Celestia Academy</title>
+<meta name="description" content="What if the person you saved became the reason you can't look away? The Third Eye is a romance visual novel with six love interests, an affection system, and endings that let you choose one heart — or all of them." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%230b0a12'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%238b7cf6'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23fbbf6d'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#top" class="nav-brand"><span class="nav-eye"></span> The Third Eye</a>
+  <div class="nav-links">
+    <a href="#cast">Cast</a>
+    <a href="#mechanics">Mechanics</a>
+    <a href="#routes">Routes</a>
+    <a href="#platforms">Platforms</a>
+    <a class="nav-cta nav-cta-link" href="https://github.com/Arnav1771/Renpy_Romcom" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<header class="vn-hero" id="top">
+  <!-- dusk sky + sakura -->
+  <div class="vn-sky" aria-hidden="true"></div>
+  <div class="vn-petals" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- character key art (real game portraits) -->
+  <div class="vn-cast" aria-hidden="true">
+    <img class="vn-chara chara-l" src="assets/img/keqing_portrait_cutout.webp" alt="" width="600" height="1000" />
+    <img class="vn-chara chara-r" src="assets/img/aether_portrait_cutout.webp" alt="" width="600" height="1000" />
+  </div>
+
+  <!-- title-screen block -->
+  <div class="vn-title">
+    <div class="vn-eye">
+      <div class="hero-eye__ring"></div>
+      <div class="hero-eye__ring r2"></div>
+      <div class="hero-eye__iris"></div>
+      <div class="hero-eye__pupil"></div>
+    </div>
+    <span class="vn-kanji">第三の眼</span>
+    <h1 class="vn-logo">THE THIRD<br/><em>EYE</em></h1>
+    <p class="vn-tag">a romance visual novel at Celestia Academy</p>
+
+    <nav class="vn-menu" aria-label="Title menu">
+      <a href="#hook"><i>▸</i> NEW GAME <em>the hook</em></a>
+      <a href="#cast"><i>▸</i> CHARACTERS <em>six love interests</em></a>
+      <a href="#routes"><i>▸</i> ROUTES <em>endings &amp; branches</em></a>
+      <a href="#platforms"><i>▸</i> EXTRAS <em>platforms &amp; roadmap</em></a>
+      <a href="https://github.com/Arnav1771/Renpy_Romcom" target="_blank" rel="noopener"><i>▸</i> SOURCE <em>github</em></a>
+    </nav>
+
+    <p class="vn-start">— tap anywhere to begin · タップしてスタート —</p>
+  </div>
+
+  <div class="scroll-cue"><span>Scroll</span><span class="scroll-cue__line"></span></div>
+</header>
+
+<main>
+
+  <section class="hook" id="hook">
+    <div class="wrap hook-grid">
+      <div class="hook-frame reveal">
+        <img src="assets/img/cg_truck_scene.webp" alt="The protagonist pushes a classmate out of the path of an oncoming truck at a rain-soaked crossing." loading="lazy" width="1600" height="1200" />
+      </div>
+      <div class="hook-copy reveal">
+        <span class="eyebrow">The Hook</span>
+        <h2 class="section-title">A single second of instinct rewrites everything.</h2>
+        <p class="lede">On an ordinary morning, you save a stranger's life without thinking twice. The next day, an invitation arrives to Celestia Academy — a school built for people who were born into it. You weren't.</p>
+        <p>Over a prologue and eight chapters, you navigate a school where every friendship is a negotiation and every kindness has a cost. The person you saved is watching. So is everyone else. What you do next decides whose story you become part of — and whose you're only allowed to witness.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mechanics" id="mechanics">
+    <div class="wrap">
+      <div class="section-kicker reveal">
+        <span class="eyebrow">How You Play</span>
+        <h2 class="section-title">Every choice has a person's name on it.</h2>
+        <p class="lede">The Third Eye tracks affection, not points. Four systems shape which of six stories you end up living.</p>
+      </div>
+      <div class="mech-grid">
+        <div class="mech-card glass reveal">
+          <div class="mech-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.2c1.6.5 2.7 2 2.7 3.8 0 1.8-1.1 3.3-2.7 3.8"/><path d="M21.5 20c0-3.1-2-5.3-4.7-5.9"/></svg></div>
+          <h3>Gender Selection</h3>
+          <p>Play as a male or female protagonist. Your choice opens a distinct set of routes and reshapes how the academy sees you.</p>
+        </div>
+        <div class="mech-card glass reveal">
+          <div class="mech-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20.2s-7.8-4.6-7.8-10.4A4.6 4.6 0 0 1 12 6.8a4.6 4.6 0 0 1 7.8 3c0 5.8-7.8 10.4-7.8 10.4Z"/></svg></div>
+          <h3>Affection System</h3>
+          <p>Every scene nudges a relationship up or down. Reach twenty and a route locks in — fall short, and it quietly closes.</p>
+        </div>
+        <div class="mech-card glass reveal">
+          <div class="mech-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><ellipse cx="12" cy="12" rx="9.5" ry="6"/><circle cx="12" cy="12" r="3.1"/></svg></div>
+          <h3>The Third Eye</h3>
+          <p>At the Chapter 5 turning point, learn a hard truth about your rival — then choose to fight for your own story, or step back and watch someone else's unfold.</p>
+        </div>
+        <div class="mech-card glass reveal">
+          <div class="mech-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><path d="M4 20c0-3 1.8-5 5-5"/><path d="M20 20c0-3-1.8-5-5-5"/><path d="M9.5 15.5 12 13l2.5 2.5"/></svg></div>
+          <h3>Matchmaker</h3>
+          <p>Push two side characters toward each other — Shroud and Lune, Miguel and Rosty — and watch a second love story unfold in the background of your own.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cast" id="cast">
+    <div class="wrap">
+      <div class="section-kicker reveal">
+        <span class="eyebrow">The Cast</span>
+        <h2 class="section-title">Six people. Six ways to be seen.</h2>
+        <p class="lede">Every love interest has their own affection arc, their own route, and their own ending — good, neutral, or bad.</p>
+      </div>
+      <div class="cast-grid">
+
+        <div class="cast-card reveal" style="--accent:var(--keqing)">
+          <div class="cast-card__glow"></div>
+          <div class="cast-card__portrait"><img src="assets/img/keqing_portrait_cutout.webp" alt="Keqing, in her Celestia Academy uniform, smiling." loading="lazy" width="600" height="1000"/></div>
+          <div class="cast-card__body">
+            <div class="cast-card__name">Keqing</div>
+            <div class="cast-card__route">Male MC Route · Purple</div>
+            <p class="cast-card__hook">The chairman's daughter — driven, exacting, and terrified of what it means to need someone.</p>
+          </div>
+        </div>
+
+        <div class="cast-card reveal" style="--accent:var(--aether)">
+          <div class="cast-card__glow"></div>
+          <div class="cast-card__portrait"><img src="assets/img/aether_portrait_cutout.webp" alt="Aether, in his Celestia Academy uniform, calm expression." loading="lazy" width="600" height="1000"/></div>
+          <div class="cast-card__body">
+            <div class="cast-card__name">Aether</div>
+            <div class="cast-card__route">Female MC Route · Gold</div>
+            <p class="cast-card__hook">The chairman's son — composed on the surface, still learning how to accept being saved.</p>
+          </div>
+        </div>
+
+        <div class="cast-card reveal" style="--accent:var(--shroud)">
+          <div class="cast-card__glow"></div>
+          <div class="cast-card__portrait"><img src="assets/img/shroud_portrait_cutout.webp" alt="Shroud, in casual academy attire, quiet expression." loading="lazy" width="600" height="1000"/></div>
+          <div class="cast-card__body">
+            <div class="cast-card__name">Shroud</div>
+            <div class="cast-card__route">Female MC Route · Blue</div>
+            <p class="cast-card__hook">Lazy by daylight, a different person entirely once the stream goes live at night.</p>
+          </div>
+        </div>
+
+        <div class="cast-card reveal" style="--accent:var(--miguel)">
+          <div class="cast-card__glow"></div>
+          <div class="cast-card__portrait"><img src="assets/img/miguel_portrait_cutout.webp" alt="Miguel, athletic build, energetic smile." loading="lazy" width="600" height="1000"/></div>
+          <div class="cast-card__body">
+            <div class="cast-card__name">Miguel</div>
+            <div class="cast-card__route">Female MC Route · Teal</div>
+            <p class="cast-card__hook">Kinetic, loud, and genuinely certain that everyone around him can be great.</p>
+          </div>
+        </div>
+
+        <div class="cast-card reveal" style="--accent:var(--lune)">
+          <div class="cast-card__glow"></div>
+          <div class="cast-card__portrait"><img src="assets/img/lune_portrait_cutout.webp" alt="Lune, quiet expression, academy uniform." loading="lazy" width="600" height="1000"/></div>
+          <div class="cast-card__body">
+            <div class="cast-card__name">Lune</div>
+            <div class="cast-card__route">Male MC Route · Pink</div>
+            <p class="cast-card__hook">Self-sufficient to a fault. Slow to trust — but once she does, it isn't halfway.</p>
+          </div>
+        </div>
+
+        <div class="cast-card reveal" style="--accent:var(--rosty)">
+          <div class="cast-card__glow"></div>
+          <div class="cast-card__portrait"><img src="assets/img/rosty_portrait_cutout.webp" alt="Rosty, energetic pose, academy uniform." loading="lazy" width="600" height="1000"/></div>
+          <div class="cast-card__body">
+            <div class="cast-card__name">Rosty</div>
+            <div class="cast-card__route">Male MC Route · Orange</div>
+            <p class="cast-card__hook">Competitive on the court, and secretly the best writer in her year — if anyone knew to ask.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="routes" id="routes">
+    <div class="wrap">
+      <div class="section-kicker reveal">
+        <span class="eyebrow">Routes &amp; Endings</span>
+        <h2 class="section-title">Every path branches. Some of them meet again.</h2>
+        <p class="lede">Your gender choice opens one of two lanes. From there, affection decides which single route locks in — or whether more than one stays open.</p>
+      </div>
+      <div class="routes-wrap">
+        <div class="lane lane--male reveal">
+          <h3>Male Protagonist</h3>
+          <p class="desc">Light-blue lane · three love interests</p>
+          <div class="lane-routes">
+            <div class="route-pill"><span class="dot" style="background:var(--keqing)"></span> Keqing Route</div>
+            <div class="route-pill"><span class="dot" style="background:var(--lune)"></span> Lune Route</div>
+            <div class="route-pill"><span class="dot" style="background:var(--rosty)"></span> Rosty Route</div>
+          </div>
+          <div class="lane-converge">Sustain high affection with more than one and unlock <strong>Queen's Court</strong> — a polyamorous ending.</div>
+        </div>
+        <div class="lane lane--female reveal">
+          <h3>Female Protagonist</h3>
+          <p class="desc">Light-pink lane · three love interests</p>
+          <div class="lane-routes">
+            <div class="route-pill"><span class="dot" style="background:var(--aether)"></span> Aether Route</div>
+            <div class="route-pill"><span class="dot" style="background:var(--shroud)"></span> Shroud Route</div>
+            <div class="route-pill"><span class="dot" style="background:var(--miguel)"></span> Miguel Route</div>
+          </div>
+          <div class="lane-converge">Sustain high affection with more than one and unlock the <strong>Harem</strong> ending.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="platforms" id="platforms">
+    <div class="wrap">
+      <div class="section-kicker reveal">
+        <span class="eyebrow">Where To Play</span>
+        <h2 class="section-title">Built on Ren'Py. Headed to every screen.</h2>
+        <p class="lede">The Third Eye is in active development. Itch.io launches first; Android and Steam follow once the story is content-complete.</p>
+      </div>
+      <div class="platform-grid">
+        <div class="platform-card glass reveal"><span class="name">Windows / macOS / Linux</span><span class="status-pill ready">Phase 1</span></div>
+        <div class="platform-card glass reveal"><span class="name">Web (Itch.io)</span><span class="status-pill ready">Phase 1</span></div>
+        <div class="platform-card glass reveal"><span class="name">Android</span><span class="status-pill next">Phase 2</span></div>
+        <div class="platform-card glass reveal"><span class="name">Steam</span><span class="status-pill next">Phase 2</span></div>
+        <div class="platform-card glass reveal"><span class="name">iOS</span><span class="status-pill later">Deferred</span></div>
+        <div class="platform-card glass reveal"><span class="name">Playtime</span><span class="status-pill later">5–8h / route</span></div>
+      </div>
+
+      <div class="hero-ctas reveal" style="margin-top:32px;">
+        <a class="btn btn-ghost" href="itch.html">Preview itch.io Page</a>
+        <a class="btn btn-ghost" href="steam.html">Preview Steam Page</a>
+      </div>
+
+      <div class="roadmap">
+        <div class="road-step reveal">
+          <span class="phase">Phase 1</span>
+          <h4>Itch.io Launch</h4>
+          <p>Windows, Mac, Linux &amp; Web builds, free with optional donations.</p>
+        </div>
+        <div class="road-step reveal">
+          <span class="phase">Phase 2A</span>
+          <h4>Android</h4>
+          <p>Portrait-optimized build, 4–6 weeks after launch.</p>
+        </div>
+        <div class="road-step reveal">
+          <span class="phase">Phase 2B</span>
+          <h4>Steam</h4>
+          <p>$4.99 launch price, 6–8 weeks after Itch.io.</p>
+        </div>
+        <div class="road-step reveal">
+          <span class="phase">Phase 3</span>
+          <h4>iOS &amp; Beyond</h4>
+          <p>Deferred until the concept is proven across other platforms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="nav-eye"></span> The Third Eye</div>
+        <p class="footer-tag">A romance visual novel built in Ren'Py. Every story deserves to be seen — including the ones you choose not to live.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h5>Project</h5>
+          <a href="https://github.com/Arnav1771/Renpy_Romcom" target="_blank" rel="noopener">Source on GitHub</a>
+          <a href="#cast">The Cast</a>
+          <a href="#routes">Routes &amp; Endings</a>
+        </div>
+        <div>
+          <h5>Status</h5>
+          <span class="badge-dev"><span class="pulse"></span> In Development</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year">2026</span> The Third Eye. Fan-made, built with Ren&#39;Py.</span>
+      <span>Art generated for this project · glassmorphism UI direction</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

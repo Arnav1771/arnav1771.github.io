@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anima Swarm - Multi-Agent Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Scanline Overlay for Cyberpunk/Anime CRT Monitor Vibe -->
+    <div class="scanlines"></div>
+    <div class="grid-overlay"></div>
+
+    <header class="app-header">
+        <div class="logo-container">
+            <span class="logo-icon">💠</span>
+            <h1 class="logo-text">ANIMA <span class="highlight">SWARM</span></h1>
+        </div>
+        <div class="system-status">
+            <span class="status-dot pulsing"></span>
+            <span class="status-label">ALL AGENTS ONLINE [24/7 MODE]</span>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Input Panel: User prompts the agents -->
+        <section class="panel control-panel">
+            <div class="panel-header">
+                <h2><span class="panel-num">01</span> COMMAND INTERFACE</h2>
+                <div class="panel-decor"></div>
+            </div>
+            <div class="panel-body">
+                <p class="panel-instruction">Input your project concept below to summon the agent swarm. They will coordinate live to compile your system specs.</p>
+                <div class="prompt-input-wrapper">
+                    <textarea id="project-prompt" placeholder="e.g. Build a real-time anime character battle portal with Redis hot-caching and PostgreSQL persistent ranks..." rows="3">Build a real-time messaging portal with pgvector memory and Redis caches</textarea>
+                    <div class="input-decor-lines"></div>
+                </div>
+                <button id="summon-btn" class="glow-btn">
+                    <span class="btn-glow-ring"></span>
+                    <span class="btn-content">SUMMON SWARM [F5]</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Swarm Visualization: Circular agent node graph -->
+        <section class="panel graph-panel">
+            <div class="panel-header">
+                <h2><span class="panel-num">02</span> SWARM SYNAPSE VISUALIZATION</h2>
+                <div class="panel-decor"></div>
+            </div>
+            <div class="panel-body graph-container">
+                <div class="central-node">
+                    <div class="node-glow"></div>
+                    <div class="node-ring-outer"></div>
+                    <div class="node-ring-inner"></div>
+                    <span class="central-label">ORCHESTRATOR</span>
+                </div>
+
+                <!-- Agent Node 1: TechStack -->
+                <div class="agent-node node-tech" id="node-tech">
+                    <div class="agent-avatar">🧬</div>
+                    <span class="node-name">TechStack-Bot</span>
+                    <span class="node-status">STANDBY</span>
+                </div>
+
+                <!-- Agent Node 2: Infra -->
+                <div class="agent-node node-infra" id="node-infra">
+                    <div class="agent-avatar">🛡️</div>
+                    <span class="node-name">Infra-Bot</span>
+                    <span class="node-status">STANDBY</span>
+                </div>
+
+                <!-- Agent Node 3: Deploy -->
+                <div class="agent-node node-deploy" id="node-deploy">
+                    <div class="agent-avatar">🚀</div>
+                    <span class="node-name">Deploy-Bot</span>
+                    <span class="node-status">STANDBY</span>
+                </div>
+
+                <!-- Graph connection lines (SVG) -->
+                <svg class="graph-connections">
+                    <line class="conn-line" id="line-tech" x1="50%" y1="50%" x2="50%" y2="20%" />
+                    <line class="conn-line" id="line-infra" x1="50%" y1="50%" x2="20%" y2="70%" />
+                    <line class="conn-line" id="line-deploy" x1="50%" y1="50%" x2="80%" y2="70%" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- Output Terminal Panel -->
+        <section class="panel terminal-panel">
+            <div class="panel-header">
+                <h2><span class="panel-num">03</span> STREAMING PROTOCOL OUTPUT</h2>
+                <div class="panel-decor"></div>
+            </div>
+            <div class="panel-body terminal-body">
+                <div class="terminal-header-bar">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span class="term-title">anima-swarm-cli:~</span>
+                </div>
+                <div class="terminal-content" id="terminal-log">
+                    <div class="log-line system-msg">[SYSTEM] Swarm initialization pending. Click SUMMON to start collaboration session.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Specification Board: Final Spec details -->
+        <section class="panel spec-panel">
+            <div class="panel-header">
+                <h2><span class="panel-num">04</span> SYSTEM SPECIFICATIONS</h2>
+                <div class="panel-decor"></div>
+            </div>
+            <div class="panel-body spec-body" id="spec-result">
+                <div class="empty-spec-message">
+                    <span class="lock-icon">🔒</span>
+                    <p>System specifications are locked until swarm collaboration finishes execution.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p class="copyright">ANIMA AGENT SWARM CLIENT v0.1.0 · OPERATIONAL SECURITY SECURED</p>
+        <div class="decor-strip"></div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

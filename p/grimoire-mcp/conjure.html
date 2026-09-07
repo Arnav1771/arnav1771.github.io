@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Conjure App — Grimoire MCP</title>
+<meta name="description" content="Enter your incantation: describe an app in plain English and Grimoire generates it into a private GitHub repo, 100% client-side with your own keys."/>
+<meta name="theme-color" content="#120b1e"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23120b1e'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%23d9b45b' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23f2d992'/%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="grimoire.css"/>
+<style>
+/* mock #4: three panels — Caster | Incantation | Conjure Portal */
+.tri{display:grid;grid-template-columns:290px 1.05fr 1fr;gap:1.2rem;align-items:start;padding:2rem 0 3rem}
+@media (max-width:1080px){.tri{grid-template-columns:1fr 1fr}.pane-portal{grid-column:1/-1}}
+@media (max-width:760px){.tri{grid-template-columns:1fr}.pane-portal{grid-column:auto}}
+.pane{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line-2);
+  border-radius:18px;padding:1.3rem}
+.pane h2{font-size:1.25rem;margin-bottom:.9rem}
+.pane-inc h2{font-size:clamp(1.5rem,2.4vw,2rem)}
+.pane-inc .sub{color:var(--muted);font-size:.85rem;margin:-.4rem 0 1rem}
+.chip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;margin-bottom:1rem}
+.prov-chip{min-width:0;padding:.6rem .4rem}
+.prov-chip.off{opacity:.45;cursor:not-allowed}
+.prov-chip.off small{font-size:.58rem;letter-spacing:.06em;color:var(--dim)}
+.pane hr{border:none;border-top:1px solid var(--line);margin:1.1rem 0}
+#prompt{min-height:180px}
+.conjure-btn{width:100%;margin-top:.7rem;letter-spacing:.24em}
+.trust-line{color:var(--dim);font-size:.76rem;margin-top:.9rem;line-height:1.65}
+.foot-row{display:flex;flex-wrap:wrap;gap:1.4rem;justify-content:space-between;
+  border-top:1px solid var(--line);padding:1.6rem 0;color:var(--muted);font-size:.85rem}
+.foot-row a{color:var(--muted)}
+</style>
+</head>
+<body>
+<a class="skip" href="#gen">Skip to the generator</a>
+<button id="theme" hidden aria-hidden="true" tabindex="-1"></button>
+
+<header class="gnav">
+  <a class="brand" href="index.html"><span class="sigil"></span><b>GRIMOIRE</b>&nbsp;<span>MCP</span></a>
+  <nav aria-label="Primary">
+    <a href="index.html#features">Features</a>
+    <a href="docs.html">Docs</a>
+    <a href="community.html">Community</a>
+    <a href="conjure.html" aria-current="page">Conjure App</a>
+    <a class="cta keep" href="https://github.com/Arnav1771/turmux_builder" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <form id="gen" class="tri" autocomplete="off">
+    <!-- ── CASTER (left) ── -->
+    <section class="pane pane-caster" aria-labelledby="caster-h">
+      <h2 id="caster-h">Caster</h2>
+      <div class="chip-grid" id="prov-chips">
+        <button type="button" class="prov-chip" data-p="gemini" aria-pressed="true"><span class="g">✦</span>Gemini</button>
+        <button type="button" class="prov-chip" data-p="anthropic" aria-pressed="false"><span class="g">◈</span>Claude</button>
+        <button type="button" class="prov-chip off" disabled title="Available in the CLI, MCP server and Discord bot"><span class="g">⌁</span>Groq<small>CLI/MCP</small></button>
+        <button type="button" class="prov-chip off" disabled title="Available in the CLI, MCP server and Discord bot"><span class="g">▣</span>GH Models<small>CLI/MCP</small></button>
+      </div>
+      <div class="field">
+        <label for="provider">Provider</label>
+        <select id="provider">
+          <option value="gemini">Google Gemini</option>
+          <option value="anthropic">Anthropic (Claude)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="model">Model</label>
+        <select id="model"></select>
+      </div>
+      <hr/>
+      <div class="field">
+        <label for="ghuser">GitHub username</label>
+        <input id="ghuser" type="text" placeholder="your-github-username" autocomplete="off"/>
+      </div>
+      <div class="field">
+        <label for="ghtoken">GitHub token <span class="hint">(scope: repo)</span></label>
+        <input id="ghtoken" type="password" placeholder="ghp_…" autocomplete="new-password"/>
+      </div>
+      <div class="field">
+        <label for="aikey"><span id="aikey-label">Gemini API key</span></label>
+        <input id="aikey" type="password" placeholder="paste your provider key" autocomplete="new-password"/>
+      </div>
+      <label class="remember"><input type="checkbox" id="remember" checked/> Remember keys in this browser</label>
+    </section>
+
+    <!-- ── INCANTATION (center) ── -->
+    <section class="pane pane-inc" aria-labelledby="inc-h">
+      <h2 id="inc-h">Enter your <em style="font-style:italic;color:transparent;background:linear-gradient(100deg,var(--gold-2),var(--portal));-webkit-background-clip:text;background-clip:text">incantation</em></h2>
+      <p class="sub">Describe the app. Plain English is the spec.</p>
+      <div class="field">
+        <textarea id="prompt" rows="8" aria-label="Describe your app" placeholder="a Flask todo app with SQLite, add/complete/delete, and a dark-mode UI" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary conjure-btn" id="build">CONJURE ⚝</button>
+      <p class="trust-line">100% client-side — keys live in <strong>this browser</strong> and go directly to your provider and GitHub over HTTPS. Never to us. This page is static.</p>
+    </section>
+
+    <!-- ── CONJURE PORTAL (right) ── -->
+    <section class="pane pane-portal" aria-labelledby="portal-h">
+      <h2 id="portal-h">Conjure Portal <span class="kicker" style="float:right;margin:0">LIVE</span></h2>
+      <div class="gterm">
+        <div class="gterm-bar"><i></i><i></i><i></i><span>the portal watches…</span></div>
+        <div class="gterm-body" id="portal-idle">Awaiting your incantation. The plan, every conjured file, and your new private repo will appear here.</div>
+      </div>
+      <div id="output" class="output" hidden aria-live="polite" style="margin-top:.9rem"></div>
+      <p class="trust-line">⚝ Two passes: plan → generate each file → create private repo → push → add <code>IMP_DOCS/</code>.</p>
+    </section>
+  </form>
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span>© 2026 Grimoire MCP — free &amp; open-source.</span>
+    <a href="index.html">← back to the portal</a>
+  </div>
+</footer>
+
+<script>
+/* click-flow sugar (decoration only — the generator is app.js, untouched):
+   ?prompt= prefill from the landing portal + provider chips over the real select */
+(function () {
+  var q = new URLSearchParams(location.search).get("prompt");
+  if (q) { var t = document.getElementById("prompt"); if (t) t.value = q.slice(0, 400); }
+  var sel = document.getElementById("provider");
+  var chips = document.querySelectorAll(".prov-chip[data-p]");
+  function sync(v) { chips.forEach(function (c) { c.setAttribute("aria-pressed", String(c.dataset.p === v)); }); }
+  chips.forEach(function (c) {
+    c.addEventListener("click", function () {
+      sel.value = c.dataset.p;
+      sel.dispatchEvent(new Event("change"));
+      sync(c.dataset.p);
+    });
+  });
+  sel.addEventListener("change", function () { sync(sel.value); });
+  sync(sel.value);
+  var idle = document.getElementById("portal-idle");
+  var build = document.getElementById("build");
+  if (build && idle) build.addEventListener("click", function () {
+    setTimeout(function () {
+      if (!document.getElementById("output").hidden) idle.textContent = "Channeling…";
+    }, 300);
+  });
+})();
+</script>
+<script src="app.js"></script>
+<script src="aurum.js"></script>
+</body>
+</html>

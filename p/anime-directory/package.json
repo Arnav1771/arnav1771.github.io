@@ -1,0 +1,14 @@
+{
+  "name": "anime-directory",
+  "version": "1.0.0",
+  "description": "A fast, zero-dependency anime directory. Browse, search, filter, and favorite anime from the MyAnimeList (Jikan) API with an offline dataset fallback.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "start": "node scripts/serve.js",
+    "serve": "node scripts/serve.js"
+  },
+  "keywords": ["anime", "directory", "jikan", "myanimelist", "vanilla-js"],
+  "author": "Arnav1771",
+  "license": "MIT"
+}

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keqing Electro ⚡ Arch Hyprland</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Epic Matrix Rain Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Hacker HUD (Top Left) -->
+    <div id="hacker-hud">
+        <div id="hud-content"></div>
+    </div>
+
+    <!-- Arch Boot Sequence -->
+    <div id="boot-screen">
+        <p class="boot-line white">[    0.000000] Linux version 6.8.0-arch1-1</p>
+        <p class="boot-line white">[    0.000000] Command line: initrd=\initramfs-linux.img root=PARTUUID=1234 rw loglevel=3 quiet</p>
+        <p class="boot-line white">[    0.123412] Mounting root file system...</p>
+        <p class="boot-line white">[    0.412411] Starting Systemd...</p>
+        <p class="boot-line white">[  <span style="color:#a6e3a1">OK</span>  ] Started System Logging Service.</p>
+        <p class="boot-line white">[  <span style="color:#a6e3a1">OK</span>  ] Started Login Service.</p>
+        <p class="boot-line red">[FAILED] Failed to start Wait for Network to be Configured.</p>
+        <p class="boot-line white">[  <span style="color:#a6e3a1">OK</span>  ] Reached target Graphical Interface.</p>
+        <p class="boot-line blue">Loading Keqing Electro Environment...</p>
+        <p class="boot-line blue">Initializing Wayland Compositor...</p>
+        <p class="boot-line white">_</p>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Background Elements -->
+    <div class="bg-glow purple-glow"></div>
+    <div class="bg-glow cyan-glow"></div>
+
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="logo"><i data-lucide="zap" style="color: #f9e2af;"></i> <span class="gradient-text">Arch Rice</span></div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#showcase">Showcase</a>
+                <a href="https://github.com/Arnav1771/Arch_Rice" class="btn-primary" target="_blank">View Source</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="fade-in-up glitch-hover">Keqing <span class="gradient-text">Electro</span></h1>
+                
+                <!-- Hacker Terminal Typing Subtitle -->
+                <p class="subtitle fade-in-up delay-1">
+                    <span id="typing-subtitle"></span><span class="typing-cursor">_</span>
+                </p>
+
+                <div class="cta-group fade-in-up delay-2">
+                    <a href="https://github.com/Arnav1771/Arch_Rice" class="btn-primary" target="_blank">
+                        <i data-lucide="github"></i> Explore Repository
+                    </a>
+                    <a href="#showcase" class="btn-secondary">
+                        <i data-lucide="play-circle"></i> Watch Showcase
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-image-container fade-in-up delay-3">
+                <div class="terminal-frame tilt-effect">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="dot close"></div>
+                            <div class="dot min"></div>
+                            <div class="dot max"></div>
+                        </div>
+                        <div class="terminal-title">keqing@archlinux: ~</div>
+                    </div>
+                    <video src="assets/showcase3.mp4" class="hero-screenshot" autoplay loop muted playsinline poster="assets/showcase-apps.png"></video>
+                </div>
+                
+                <div class="floating-badge badge-waybar">
+                    <i data-lucide="terminal"></i> Cava + Live Code
+                </div>
+                <div class="floating-badge badge-pywal">
+                    <i data-lucide="palette"></i> Pywal Themed
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2 class="section-title">Lightning <span class="gradient-text glitch-hover">Fast</span> Workflow</h2>
+            <div class="feature-grid">
+                <div class="feature-card glass-panel tilt-effect">
+                    <div class="feature-icon"><i data-lucide="sparkles"></i></div>
+                    <h3>Dynamic Theming</h3>
+                    <p>Trigger SUPER+SHIFT+W to select a wallpaper via Rofi. Watch as Pywal instantly extracts the color palette and dynamically themes your entire OS on the fly.</p>
+                </div>
+                <div class="feature-card glass-panel tilt-effect">
+                    <div class="feature-icon"><i data-lucide="layout-panel-left"></i></div>
+                    <h3>Intelligent Waybar</h3>
+                    <p>Floating glass islands featuring live active window titles, media player synchronization (MPRIS), Japanese Kanji workspaces, and network integrations.</p>
+                </div>
+                <div class="feature-card glass-panel tilt-effect">
+                    <div class="feature-icon"><i data-lucide="zap"></i></div>
+                    <h3>Fluid Physics</h3>
+                    <p>Custom-tuned randomized bezier curves. Every window spawn, workspace transition, and resizing action feels buttery smooth and incredibly satisfying.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="showcase" class="features">
+            <h2 class="section-title">The <span class="gradient-text glitch-hover">Archive</span></h2>
+            <div class="gallery-grid">
+                <div class="gallery-card glass-panel fade-in-up tilt-effect">
+                    <img src="assets/showcase-clean.png" alt="Clean Desktop">
+                    <div class="gallery-info">
+                        <h3>Pristine Desktop</h3>
+                        <p>A minimalist layout designed to eliminate distractions, highlighting the custom floating Waybar and the breathtaking electro wallpaper.</p>
+                    </div>
+                </div>
+                <div class="gallery-card glass-panel fade-in-up delay-1 tilt-effect">
+                    <img src="assets/showcase-apps.png" alt="Apps & Tiling">
+                    <div class="gallery-info">
+                        <h3>Master Layout Tiling</h3>
+                        <p>Hyprland's native master layout in action, featuring Yazi and Btop running natively in Kitty terminals with pure frosted glass transparency.</p>
+                    </div>
+                </div>
+                <div class="gallery-card glass-panel fade-in-up delay-2 tilt-effect">
+                    <video src="assets/showcase.mp4" autoplay loop muted playsinline></video>
+                    <div class="gallery-info">
+                        <h3>Automated Theme Deployment</h3>
+                        <p>A legacy showcase demonstrating the instant Pywal synchronization across active borders, terminal environments, and the Waybar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-panel">
+        <p>Built with 💜 for the Arch Linux Community | "Opportunity, here I come!"</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // --- Custom Cursor & Particle Trail Logic ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            
+            cursorOutline.style.left = `${posX}px`;
+            cursorOutline.style.top = `${posY}px`;
+            
+            // Particle Generation (Throttle slightly to save FPS)
+            if (Math.random() > 0.4) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = posX + 'px';
+                particle.style.top = posY + 'px';
+                
+                const size = Math.random() * 6 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random cyan or purple
+                particle.style.backgroundColor = Math.random() > 0.5 ? '#89dceb' : '#cba6f7';
+                particle.style.boxShadow = `0 0 10px ${particle.style.backgroundColor}`;
+                
+                // Random drift direction
+                const tx = (Math.random() - 0.5) * 100 + 'px';
+                const ty = (Math.random() - 0.5) * 100 + 'px';
+                particle.style.setProperty('--tx', tx);
+                particle.style.setProperty('--ty', ty);
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }
+        });
+
+        // --- Screen Shake on Click ---
+        window.addEventListener('click', () => {
+            document.body.classList.add('shake');
+            setTimeout(() => document.body.classList.remove('shake'), 300);
+        });
+
+        // --- Hacker HUD Logic ---
+        const hudContent = document.getElementById('hud-content');
+        const hexChars = '0123456789ABCDEF';
+        function genHex() {
+            let h = '0x';
+            for(let i=0; i<8; i++) h += hexChars[Math.floor(Math.random() * 16)];
+            return h;
+        }
+
+        setInterval(() => {
+            const cpu = Math.floor(Math.random() * 100);
+            const ram = Math.floor(Math.random() * 32000);
+            const net = Math.floor(Math.random() * 999);
+            
+            const bars = Math.floor(cpu / 5);
+            const cpuBar = '[' + '|'.repeat(bars) + ' '.repeat(20 - bars) + ']';
+            
+            let html = `<p class="hud-line">SYS.CP_LOAD: ${cpuBar} ${cpu}%</p>`;
+            html += `<p class="hud-line">SYS.MEM_ALL: ${ram} MB / 32768 MB</p>`;
+            html += `<p class="hud-line">NET.UPLINK : ${net} Mbps [SECURED]</p>`;
+            html += `<p class="hud-line">------------------------------------</p>`;
+            
+            for(let i=0; i<8; i++) {
+                html += `<p class="hud-line">${genHex()} ${genHex()} ${genHex()} ${genHex()}</p>`;
+            }
+            
+            hudContent.innerHTML = html;
+        }, 120);
+
+        // --- Interactive 3D Parallax Tilt (VanillaTilt Logic) ---
+        document.querySelectorAll('.tilt-effect').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                
+                card.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1500px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)';
+            });
+            
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'transform 0.1s ease';
+            });
+        });
+
+        // --- Matrix Rain Logic ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeMatrix() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeMatrix();
+        window.addEventListener('resize', resizeMatrix);
+
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*'.split('');
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for(let x = 0; x < columns; x++) drops[x] = 1;
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 4, 10, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.font = fontSize + 'px "JetBrains Mono"';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                
+                if (Math.random() > 0.8) ctx.fillStyle = '#cba6f7';
+                else ctx.fillStyle = '#89dceb';
+                
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+
+        // --- Arch Boot Sequence & Terminal Typing Logic ---
+        const bootScreen = document.getElementById('boot-screen');
+        const bootLines = document.querySelectorAll('.boot-line');
+        const typingSubtitle = document.getElementById('typing-subtitle');
+        const subtitleText = "An ultra-premium, deeply customized Hyprland desktop environment for Arch Linux. Engineered with dynamic Pywal sync, fluid Bezier animations, and absolute elegance.";
+        
+        document.body.style.overflow = 'hidden';
+        
+        let bootDelay = 300;
+        bootLines.forEach((line, index) => {
+            setTimeout(() => {
+                line.style.opacity = 1;
+            }, bootDelay);
+            if (index === 6) bootDelay += 600; // Failed network
+            else if (index === 9) bootDelay += 800; // Wayland init
+            else bootDelay += Math.random() * 150 + 50;
+        });
+        
+        // Hide boot screen and start typing
+        setTimeout(() => {
+            bootScreen.classList.add('hide');
+            document.body.style.overflow = 'auto';
+            document.body.style.overflowX = 'hidden';
+            
+            // Start Hacker Typing Subtitle
+            let typeIndex = 0;
+            function typeWriter() {
+                if (typeIndex < subtitleText.length) {
+                    typingSubtitle.innerHTML += subtitleText.charAt(typeIndex);
+                    typeIndex++;
+                    setTimeout(typeWriter, 20); // Typing speed
+                }
+            }
+            setTimeout(typeWriter, 500);
+            
+        }, bootDelay + 600);
+
+        // --- Scroll Animation Logic ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>

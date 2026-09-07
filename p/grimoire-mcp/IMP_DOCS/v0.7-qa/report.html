@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Grimoire v0.7 QA — Canary-style session report</title>
+<style>body{font:15px/1.6 system-ui;background:#120b1e;color:#f0e9f8;max-width:1000px;margin:2rem auto;padding:0 1rem}
+h1{font-family:Georgia,serif}td,th{padding:.5rem .7rem;border-bottom:1px solid #3a2a5c;text-align:left;font-size:.85rem}
+.p{color:#7ce8a8}.f{color:#ff7a7a}img{max-width:100%;border:1px solid #3a2a5c;border-radius:8px}
+figure{margin:1.4rem 0}figcaption{font-size:.75rem;color:#a795c4}video{max-width:100%;border-radius:8px;border:1px solid #d9b45b}
+code{background:#221636;padding:.1em .4em;border-radius:5px}</style></head><body>
+<h1>Grimoire MCP — v0.7 live-site QA session</h1>
+<p>Target: <code>https://arnav1771.github.io/grimoire-MCP/</code> · 2026-07-18T08:20:20.293Z · headless Chromium 1280×800 + 390×844 · recorded session</p>
+<h2>Verdicts</h2><table><tr><th>#</th><th>Step</th><th>Result</th><th>Evidence</th></tr><tr><td>1</td><td>Landing renders (portal paints, marquee, CONJURE, count-ups)</td><td class="p">PASS</td><td>canvas alpha-sum 20131; stats [15+ 4 5 2 0]</td></tr>
+<tr><td>2</td><td>Incantation → conjure prefill</td><td class="p">PASS</td><td>prompt="a pomodoro timer web app"</td></tr>
+<tr><td>3</td><td>Conjure contract + caster chips</td><td class="p">PASS</td><td>missing:[] modelOpts:3 chip→anthropic label:'Anthropic API key' disabled:2</td></tr>
+<tr><td>4</td><td>Empty submit is safe</td><td class="p">PASS</td><td>app.js error line in #output</td></tr>
+<tr><td>5</td><td>Docs Try-it-out → Run → prefill</td><td class="p">PASS</td><td>sidebar links:7 prompt="a chat app with rooms"</td></tr>
+<tr><td>6</td><td>Community live GitHub data (or graceful fallback)</td><td class="p">PASS</td><td>leaderboard avatars:1 commit links:5 (LIVE data)</td></tr>
+<tr><td>7</td><td>Mobile 390×844 — no horizontal overflow</td><td class="p">PASS</td><td>overflow 0px</td></tr></table>
+<h2>Console errors</h2><p class='p'>none — zero console errors across every page and step.</p>
+<h2>Recording</h2><video controls src="recording.mp4"></video><p><code>recording-mobile.mp4</code> covers the mobile step.</p>
+<h2>Screenshots</h2><figure><img src="screenshots/01-landing.png" loading="lazy"/><figcaption>01-landing.png</figcaption></figure>
+<figure><img src="screenshots/02-incantation-prefill.png" loading="lazy"/><figcaption>02-incantation-prefill.png</figcaption></figure>
+<figure><img src="screenshots/03-conjure-contract.png" loading="lazy"/><figcaption>03-conjure-contract.png</figcaption></figure>
+<figure><img src="screenshots/04-validation.png" loading="lazy"/><figcaption>04-validation.png</figcaption></figure>
+<figure><img src="screenshots/05-docs-run-flow.png" loading="lazy"/><figcaption>05-docs-run-flow.png</figcaption></figure>
+<figure><img src="screenshots/06-community-live.png" loading="lazy"/><figcaption>06-community-live.png</figcaption></figure>
+<figure><img src="screenshots/07-mobile.png" loading="lazy"/><figcaption>07-mobile.png</figcaption></figure>
+</body></html>

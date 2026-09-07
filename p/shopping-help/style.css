@@ -1,0 +1,1156 @@
+/* ==========================================================================
+   Mummy's Shopping Helper
+   --------------------------------------------------------------------------
+   Direction: "enamel kitchen". The palette comes from an Indian household's
+   own objects rather than from dashboard convention — deep enamel teal, haldi
+   amber, chalk-white. The verdict is the product, so the decision plate is
+   the loudest thing on the page and everything else stays quiet. The closing
+   advice is set as a tear-off slip, because that is the line she acts on.
+
+   Type: no webfonts. A system text-serif carries the family voice (wordmark,
+   welcome line, advice) and the system UI sans carries chrome and data.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Tokens
+   ========================================================================== */
+:root {
+  color-scheme: light dark;
+
+  /* --- Light: daylight kitchen ------------------------------------------ */
+  --paper:       #F3F5F1;
+  --surface:     #FFFFFF;
+  --surface-2:   #E8EDE7;
+  --ink:         #0F1F1B;
+  --ink-soft:    #495B55;
+  --line:        #D5DDD7;
+  --line-strong: #BEC9C1;
+
+  --teal:        #0B6157;
+  --teal-tint:   rgba(11, 97, 87, 0.08);
+  --haldi:       #8A5200;
+  --haldi-line:  #D08A18;
+
+  --go:          #0A6C3D;
+  --stop:        #A81E12;
+
+  /* Decision plates */
+  --plate-buy-bg:    #E2F2E8;
+  --plate-buy-ink:   #084F2D;
+  --plate-buy-line:  #0A6C3D;
+  --plate-good-bg:   #FAEDD4;
+  --plate-good-ink:  #6E4200;
+  --plate-good-line: #A9711A;
+  --plate-avoid-bg:  #FBE5E2;
+  --plate-avoid-ink: #8A1810;
+  --plate-avoid-line:#A81E12;
+
+  --slip-bg:     #FDF3E3;
+
+  --glow:  rgba(11, 97, 87, 0.07);
+  --weave: rgba(15, 31, 27, 0.045);
+
+  --shadow-card:  0 1px 2px rgba(15, 31, 27, 0.05), 0 8px 22px -12px rgba(15, 31, 27, 0.18);
+  --shadow-float: 0 2px 6px rgba(15, 31, 27, 0.06), 0 24px 48px -20px rgba(15, 31, 27, 0.32);
+
+  /* --- Type ------------------------------------------------------------- */
+  --font-ui:    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+                Arial, "Noto Sans", "Noto Sans Devanagari", sans-serif;
+  --font-voice: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino,
+                "Book Antiqua", Georgia, "Times New Roman", serif;
+  --font-mono:  ui-monospace, "Cascadia Mono", "Segoe UI Mono", "SF Mono",
+                Menlo, Consolas, monospace;
+
+  /* --- Shape & motion --------------------------------------------------- */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 26px;
+  --tap: 48px;
+
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --t-fast: 140ms var(--ease);
+  --t-mid:  260ms var(--ease);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --- Dark: night kitchen ------------------------------------------- */
+    --paper:       #0C1513;
+    --surface:     #15211E;
+    --surface-2:   #1D2B27;
+    --ink:         #E7EEE9;
+    --ink-soft:    #9DB2AA;
+    --line:        #26372F;
+    --line-strong: #35493F;
+
+    --teal:        #5AD8C4;
+    --teal-tint:   rgba(90, 216, 196, 0.10);
+    --haldi:       #F2B93B;
+    --haldi-line:  #F2B93B;
+
+    --go:          #55D98A;
+    --stop:        #FF8B7B;
+
+    --plate-buy-bg:    #122C21;
+    --plate-buy-ink:   #7FE8A9;
+    --plate-buy-line:  #2E7A52;
+    --plate-good-bg:   #2C2312;
+    --plate-good-ink:  #F7C55B;
+    --plate-good-line: #87651F;
+    --plate-avoid-bg:  #2E1815;
+    --plate-avoid-ink: #FFA79A;
+    --plate-avoid-line:#8A3B31;
+
+    --slip-bg:     #221C10;
+
+    --glow:  rgba(90, 216, 196, 0.07);
+    --weave: rgba(231, 238, 233, 0.035);
+
+    --shadow-card:  0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 24px -14px rgba(0, 0, 0, 0.7);
+    --shadow-float: 0 2px 8px rgba(0, 0, 0, 0.5), 0 28px 56px -22px rgba(0, 0, 0, 0.85);
+  }
+}
+
+/* ==========================================================================
+   2. Reset & base
+   ========================================================================== */
+*,
+*::before,
+*::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: 1.0625rem;            /* 17px base — this is read by an older eye */
+  line-height: 1.6;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow: hidden;                /* app shell scrolls internally */
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ambient ground: one soft overhead light + a faint khadi-weave dot texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(125% 55% at 50% -12%, var(--glow) 0%, transparent 62%),
+    radial-gradient(circle at 1px 1px, var(--weave) 1px, transparent 0);
+  background-size: auto, 6px 6px;
+}
+
+img, svg { max-width: 100%; }
+svg { flex: none; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button { background: none; border: none; cursor: pointer; }
+
+.hidden { display: none !important; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection { background: var(--teal); color: var(--paper); }
+
+/* ==========================================================================
+   3. App shell
+   ========================================================================== */
+.app-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+/* ==========================================================================
+   4. Header
+   ========================================================================== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.lockup--stacked {
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  color: var(--teal);
+}
+
+.brand-mark--lg {
+  width: 44px;
+  height: 44px;
+}
+
+.wordmark {
+  font-family: var(--font-voice);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: var(--r-md);
+  color: var(--ink-soft);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.icon-btn svg { width: 21px; height: 21px; }
+
+.icon-btn:hover { background: var(--surface-2); color: var(--ink); }
+.icon-btn:active { background: var(--line); }
+
+/* Status pill */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px 5px 9px;
+  margin-right: 4px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  flex: none;
+}
+
+.status-dot.ready   { background: var(--go); }
+.status-dot.loading { background: var(--haldi-line); animation: dot-breathe 1.2s ease-in-out infinite; }
+.status-dot.error   { background: var(--stop); }
+
+@keyframes dot-breathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+.status-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   5. First-run setup hint
+   ========================================================================== */
+.setup-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 12px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  border-left: 4px solid var(--haldi-line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.setup-hint__dot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--haldi-line);
+}
+
+.setup-hint__text {
+  flex: 1 1 12rem;
+  min-width: 0;
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   6. Chat area & welcome
+   ========================================================================== */
+.chat-area {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.chat-area::-webkit-scrollbar { width: 8px; }
+.chat-area::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 99px;
+}
+
+.welcome-message {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 6px 24px;
+  animation: rise var(--t-mid) both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.welcome-headline {
+  font-family: var(--font-voice);
+  font-size: clamp(1.5rem, 6.4vw, 2rem);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.welcome-sub {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  max-width: 30ch;
+}
+
+/* Three promises: a definition-style list, because each row is a label and
+   its meaning — not a step in a sequence, so it is not numbered. */
+.promise-list {
+  list-style: none;
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.promise-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.promise-key {
+  flex: none;
+  width: 4.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.promise-val {
+  min-width: 0;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   7. Messages
+   ========================================================================== */
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.message-user,
+.message-ai {
+  max-width: 100%;
+  min-width: 0;
+  animation: rise var(--t-mid) both;
+}
+
+.message-user { align-self: flex-end; max-width: 92%; }
+.message-ai   { align-self: stretch; }
+
+.message-bubble {
+  min-width: 0;
+  /* Pasted product links are enormous — they must break anywhere. */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* The link she pasted: a quiet receipt of what was asked, not a hero. */
+.message-user .message-bubble {
+  padding: 11px 15px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md) var(--r-md) 4px var(--r-md);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.message-user .message-bubble a { color: var(--teal); }
+
+/* The answer card */
+.message-ai .message-bubble {
+  padding: 18px 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.message-error .message-bubble,
+.message-ai.message-error .message-bubble {
+  padding: 14px 16px;
+  border: 1px solid var(--plate-avoid-line);
+  border-radius: var(--r-md);
+  background: var(--plate-avoid-bg);
+  color: var(--plate-avoid-ink);
+  box-shadow: none;
+  font-size: 0.9375rem;
+}
+
+/* ==========================================================================
+   8. Answer formatting
+   ========================================================================== */
+
+/* Section eyebrows. The dash marks a named section from the reply format. */
+.ai-content h3,
+.message-ai .section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 22px 0 8px;
+  font-family: var(--font-ui);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.ai-content h3::before,
+.message-ai .section-title::before {
+  content: "";
+  width: 14px;
+  height: 2px;
+  flex: none;
+  border-radius: 2px;
+  background: var(--teal);
+}
+
+.ai-content h3:first-child,
+.message-ai .section-title:first-child { margin-top: 0; }
+
+.ai-content h1,
+.ai-content h2,
+.ai-content h4 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin: 18px 0 6px;
+}
+
+.ai-content p { margin-bottom: 10px; }
+.ai-content p:last-child { margin-bottom: 0; }
+
+.ai-content ul,
+.ai-content ol {
+  margin: 0 0 12px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.ai-content li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 7px;
+  color: var(--ink);
+}
+
+.ai-content ul > li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.68em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--haldi-line);
+}
+
+.ai-content ol { counter-reset: ai-ol; }
+.ai-content ol > li { counter-increment: ai-ol; }
+.ai-content ol > li::before {
+  content: counter(ai-ol) ".";
+  position: absolute;
+  left: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.ai-content strong { font-weight: 700; color: var(--ink); }
+.ai-content em { font-style: italic; color: var(--ink); }
+
+.ai-content a {
+  color: var(--teal);
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.ai-content code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--surface-2);
+}
+
+.ai-content pre {
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 12px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+}
+
+.ai-content table { max-width: 100%; display: block; overflow-x: auto; }
+.ai-content hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }
+
+/* --------------------------------------------------------------------------
+   THE SIGNATURE: the faisla plate.
+   One glance, from across the room, standing up, without glasses.
+   -------------------------------------------------------------------------- */
+.decision-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin: 2px 0 4px;
+  padding: 18px 16px;
+  border: 2px solid;
+  border-radius: var(--r-md);
+  font-family: var(--font-ui);
+  font-size: clamp(1.375rem, 6.2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.decision-buy {
+  background: var(--plate-buy-bg);
+  border-color: var(--plate-buy-line);
+  color: var(--plate-buy-ink);
+}
+
+.decision-good {
+  background: var(--plate-good-bg);
+  border-color: var(--plate-good-line);
+  color: var(--plate-good-ink);
+}
+
+.decision-avoid {
+  background: var(--plate-avoid-bg);
+  border-color: var(--plate-avoid-line);
+  color: var(--plate-avoid-ink);
+}
+
+/* --------------------------------------------------------------------------
+   The tear-off slip: the one line she actually acts on.
+   -------------------------------------------------------------------------- */
+.mummy-advice {
+  position: relative;
+  margin-top: 22px;
+  padding: 20px 18px 18px;
+  border-top: 2px dashed var(--line-strong);
+  border-radius: 0 0 var(--r-md) var(--r-md);
+  background: var(--slip-bg);
+  font-family: var(--font-voice);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+/* ticket notches, punched out of the card behind it */
+.mummy-advice::before,
+.mummy-advice::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--surface);
+  transform: translateY(-50%);
+}
+
+.mummy-advice::before { left: -7px; }
+.mummy-advice::after  { right: -7px; }
+
+.mummy-advice p { margin-bottom: 0; }
+.mummy-advice strong { font-weight: 700; }
+
+/* Loading -------------------------------------------------------------- */
+.typing-indicator {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  padding: 15px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  animation: rise var(--t-mid) both;
+}
+
+.typing-dots { display: flex; align-items: center; gap: 5px; }
+
+.typing-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: typing-bounce 1.3s infinite ease-in-out both;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.16s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes typing-bounce {
+  0%, 75%, 100% { transform: scale(0.65); opacity: 0.35; }
+  30%           { transform: scale(1);    opacity: 1; }
+}
+
+.loading-text {
+  min-width: 0;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+/* Share + answered-by -------------------------------------------------- */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 16px;
+  padding: 10px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+
+.share-btn:hover { background: var(--surface-2); border-color: var(--teal); }
+.share-btn svg { width: 16px; height: 16px; }
+
+.answered-by {
+  padding: 10px 4px 2px;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.answered-by:empty { display: none; }
+
+/* The controller also writes a per-message provenance line under each reply
+   ("answered by X, Y failed over"). It serves the same purpose as .answered-by
+   and must read as the same quiet footnote -- with no rule of its own it
+   inherited body type and competed with the advice it sits under. */
+.message-meta {
+  padding: 8px 4px 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+.message-meta:empty { display: none; }
+
+/* Ungrounded disclosure. When the answering model could not search the web,
+   the reply says so inside the bubble. It must be readable, not decorative
+   fine print -- an unresearched answer that looks researched is the one
+   failure mode that would actually mislead her -- but it is still a caveat on
+   the advice above it, not a headline of its own. */
+.ungrounded-notice {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--haldi-line, var(--line-strong));
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  background: var(--surface-2);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.answered-by--ungrounded { color: var(--ink); }
+
+/* ==========================================================================
+   9. Composer
+   ========================================================================== */
+.input-area {
+  padding: 10px 12px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.composer {
+  display: grid;
+  gap: 10px;
+}
+
+.composer-input {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--tap);
+  padding: 12px 16px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1rem;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.composer-input::placeholder { color: var(--ink-soft); }
+
+.composer-input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-tint);
+}
+
+.composer-hint {
+  margin-top: 8px;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   10. Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--tap);
+  padding: 12px 22px;
+  border-radius: var(--r-md);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: background var(--t-fast), border-color var(--t-fast),
+              color var(--t-fast), transform var(--t-fast);
+}
+
+.btn:active { transform: translateY(1px); }
+.btn-block { width: 100%; }
+
+.btn-primary {
+  background: var(--teal);
+  color: var(--paper);
+  border: 1.5px solid var(--teal);
+}
+
+@media (prefers-color-scheme: light) {
+  .btn-primary { color: #FFFFFF; }
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--teal) 88%, var(--ink));
+}
+
+.btn-primary:disabled {
+  background: var(--surface-2);
+  border-color: var(--line);
+  color: var(--ink-soft);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1.5px solid var(--line-strong);
+  color: var(--ink-soft);
+}
+
+.btn-ghost:hover { border-color: var(--stop); color: var(--stop); }
+
+.btn-quiet {
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 1.5px solid var(--teal);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--teal);
+  font-size: 0.9375rem;
+}
+
+.btn-quiet:hover { background: var(--teal-tint); }
+
+.btn-retry {
+  margin-bottom: 10px;
+  border: 1.5px solid var(--haldi-line);
+  background: var(--slip-bg);
+  color: var(--haldi);
+}
+
+.btn-retry:hover { background: var(--plate-good-bg); }
+.btn-retry svg { width: 19px; height: 19px; }
+
+.btn-send__icon { width: 20px; height: 20px; }
+
+@media (min-width: 34rem) {
+  .composer { grid-template-columns: 1fr auto; align-items: center; }
+  .btn-send { padding-inline: 26px; }
+}
+
+/* ==========================================================================
+   11. Modals
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(8, 18, 15, 0.62);
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+  backdrop-filter: blur(6px);
+  animation: fade var(--t-fast) both;
+}
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-card {
+  width: 100%;
+  max-width: 27rem;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+  animation: pop var(--t-mid) both;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+.modal-card--centered {
+  padding: 32px 24px 26px;
+  text-align: center;
+}
+
+.modal-title {
+  font-family: var(--font-voice);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.modal-title--sm { font-size: 1.1875rem; }
+
+.modal-lede {
+  margin-top: 8px;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.modal-actions { margin-top: 16px; }
+
+.field-input--centered { text-align: center; margin-top: 20px; }
+
+.inline-error {
+  margin-top: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--stop);
+}
+
+/* Settings sheet: bottom-anchored on a phone, because that is where the
+   thumb already is. */
+.modal-overlay--sheet { align-items: flex-end; padding: 0; }
+
+.modal-card--sheet {
+  max-width: 30rem;
+  max-height: 92dvh;
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  border-bottom: none;
+  animation: sheet-up var(--t-mid) both;
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(18px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+@media (min-width: 34rem) {
+  .modal-overlay--sheet { align-items: center; padding: 16px; }
+  .modal-card--sheet { border-radius: var(--r-xl); border-bottom: 1px solid var(--line); }
+}
+
+.sheet-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 12px 12px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+}
+
+.sheet-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+@media (min-width: 26rem) {
+  .sheet-actions { grid-template-columns: 1.4fr 1fr; }
+}
+
+/* Fields --------------------------------------------------------------- */
+.field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+
+.field-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.field-input {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--tap);
+  padding: 12px 14px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1rem;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-tint);
+}
+
+.field-input--key {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+}
+
+/* The dropdown wrapper, its caret, the hint line and the divider under it were
+   only ever used by the model picker, which no longer exists. Removed with it;
+   tests/ui.test.js fails if any of them comes back. */
+
+.key-row { display: flex; gap: 8px; min-width: 0; }
+.key-row .field-input { flex: 1 1 auto; }
+
+.reveal-toggle {
+  flex: none;
+  min-width: 5.5rem;
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+
+.reveal-toggle:hover { color: var(--ink); border-color: var(--teal); }
+
+.keys-status {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.privacy-note {
+  display: flex;
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--teal);
+  border-radius: var(--r-sm);
+  background: var(--teal-tint);
+}
+
+.privacy-note svg {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  color: var(--teal);
+}
+
+.privacy-note p {
+  min-width: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   12. Small screens
+   ========================================================================== */
+@media (max-width: 25.9rem) {
+  .status-text { display: none; }
+  .status-indicator { padding: 6px; margin-right: 2px; }
+  .icon-btn { width: 44px; height: 44px; }
+  .chat-area { padding-inline: 10px; }
+  .message-ai .message-bubble { padding: 16px 14px 18px; }
+  .setup-hint { margin-inline: 10px; }
+}
+
+@media (max-height: 34rem) {
+  .promise-list { display: none; }
+  .welcome-message { justify-content: flex-start; }
+}
+
+/* ==========================================================================
+   13. Reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .typing-dots span {
+    animation: none !important;
+    opacity: 0.55;
+    transform: none;
+  }
+
+  .typing-dots span:nth-child(2) { opacity: 0.75; }
+  .typing-dots span:nth-child(3) { opacity: 0.95; }
+
+  .btn:active { transform: none; }
+}
+
+/* ==========================================================================
+   14. Print — she may want to show the shop the verdict
+   ========================================================================== */
+@media print {
+  .app-header, .input-area, .setup-hint, .share-btn, .modal-overlay { display: none !important; }
+  body, .app-container, .chat-area { height: auto; overflow: visible; background: #fff; }
+  .message-ai .message-bubble { box-shadow: none; }
+}

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Grimoire MCP — Conjure Intelligent Applications</title>
+<meta name="description" content="Describe an app in plain English and Grimoire conjures the full codebase into a private GitHub repo — bring your own keys, from Claude, MCP, the CLI, Discord, or right here in the browser."/>
+<link rel="canonical" href="https://arnav1771.github.io/grimoire-MCP/"/>
+<meta property="og:title" content="Grimoire MCP — Conjure Intelligent Applications"/>
+<meta property="og:description" content="Plain English in, private GitHub repo out. Two-pass engine, four providers, five surfaces, zero backend — your keys never leave your browser."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://arnav1771.github.io/grimoire-MCP/"/>
+<meta name="theme-color" content="#120b1e"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23120b1e'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%23d9b45b' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23f2d992'/%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="grimoire.css"/>
+<style>
+/* ── landing (mock #1 composition) ── */
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;
+  border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:1rem;align-items:center;width:100%}
+.hero-copy{max-width:520px;position:relative;z-index:3}
+.hero h1{font-size:clamp(2.4rem,5vw,4.1rem)}
+.hero h1 em{font-style:italic;color:transparent;
+  background:linear-gradient(100deg,var(--gold-2),var(--portal));-webkit-background-clip:text;background-clip:text}
+.lede{color:var(--muted);font-size:clamp(.98rem,1.4vw,1.15rem);margin:1.1rem 0 1.5rem;max-width:44ch}
+.lede strong{color:var(--ink)}
+.micro{color:var(--dim);font-size:.78rem;letter-spacing:.04em}
+.inc-wrap{margin-top:1.4rem;max-width:440px;display:block}
+.inc-hint{display:block;font-size:.66rem;letter-spacing:.26em;color:var(--gold);margin-bottom:.5rem}
+#incantation{background:rgba(21,14,34,.85);border:1px solid var(--line-2);border-radius:12px;padding:.8rem 1rem;font-size:.92rem}
+#incantation:focus{box-shadow:0 0 0 3px rgba(217,180,91,.16),0 0 34px rgba(168,85,247,.25)}
+/* portal stage: vortex + centered CONJURE + overlapping terminal (mock #1) */
+.portal-stage{position:relative;height:min(78vh,720px)}
+#portal{position:absolute;inset:0;width:100%;height:100%}
+.portal-cta{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  min-height:54px;padding:0 2.1rem;border-radius:999px;letter-spacing:.22em;font-size:.9rem;
+  background:rgba(18,11,30,.55);border:1px solid var(--gold);color:var(--gold-2);
+  backdrop-filter:blur(6px);text-decoration:none;display:inline-flex;align-items:center;
+  box-shadow:0 0 34px rgba(217,180,91,.35),inset 0 0 22px rgba(168,85,247,.2);
+  transition:box-shadow .25s,transform .2s}
+.portal-cta:hover{transform:translate(-50%,-50%) scale(1.06);
+  box-shadow:0 0 60px rgba(217,180,91,.6),inset 0 0 30px rgba(168,85,247,.35)}
+.hero-term{position:absolute;right:0;top:6%;width:min(340px,72%);z-index:2}
+.hero-term .gterm-body{font-size:.7rem;line-height:1.75}
+/* features: exactly 3 cards, centered icon/title (mock #1) */
+.feat3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem}
+.feat3 .gcard{text-align:center;padding:2rem 1.5rem}
+.feat3 .ic{font-size:2rem;margin-bottom:.9rem}
+/* single-row footer (mock style) */
+.foot-row{display:flex;flex-wrap:wrap;gap:1.4rem;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--line);margin-top:3rem;padding:1.6rem 0;color:var(--muted);font-size:.85rem}
+.foot-row nav{display:flex;flex-wrap:wrap;gap:1.3rem}
+.foot-row a{text-decoration:none;color:var(--muted)}
+.foot-row a:hover{color:var(--gold)}
+@media (max-width:880px){
+  .hero-grid{grid-template-columns:1fr}
+  .portal-stage{height:56vh;order:-1}
+  .hero-term{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="gnav">
+  <a class="brand" href="index.html"><span class="sigil"></span><b>GRIMOIRE</b>&nbsp;<span>MCP</span></a>
+  <nav aria-label="Primary">
+    <a href="#features">Features</a>
+    <a href="docs.html">Docs</a>
+    <a href="community.html">Community</a>
+    <a href="conjure.html">Conjure App</a>
+    <a class="cta keep" href="conjure.html">Get Started</a>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- ═══ HERO (mock #1: copy left, portal right w/ CONJURE core + terminal) ═══ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">The app-conjuring engine</p>
+        <h1>Conjure Intelligent<br/><em>Applications.</em></h1>
+        <p class="lede">Grimoire MCP: speak in plain English and a <strong>two-pass engine</strong> plans the architecture, writes every file, and pushes a <strong>private GitHub repo</strong> — with docs and CI from the first commit.</p>
+        <p class="micro">Free &amp; open-source · GitHub Models · Gemini · Groq · Claude · no sign-up, ever</p>
+        <label class="inc-wrap"><span class="inc-hint">FEED THE PORTAL — TYPE AN INCANTATION, PRESS ENTER</span>
+          <input id="incantation" type="text" maxlength="60" placeholder="a recipe app with search and favorites…" autocomplete="off" spellcheck="false"/>
+        </label>
+      </div>
+
+      <div class="portal-stage">
+        <canvas id="portal" aria-label="A living portal — a vortex of rune and code glyphs. The CONJURE button sits in its heart." role="img"></canvas>
+        <a class="portal-cta" href="conjure.html">CONJURE</a>
+        <div class="gterm hero-term" role="img" aria-label="Terminal showing the real generation pipeline.">
+          <div class="gterm-bar"><i></i><i></i><i></i><span>grimoire engine</span></div>
+          <div class="gterm-body">> Initializing Grimoire engine…
+<span class="vio">> pass 1 — architecture planned</span>
+<span class="vio">> pass 2 — conjuring every file</span>
+> IMP_DOCS/ + CI workflow added
+<span class="ok">✓ private repo pushed → yours</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INCANTATION MARQUEE ═══ -->
+  <div class="marq" aria-hidden="true">
+    <div class="marq-track">
+      <span>GITHUB MODELS <b>⚝</b> GEMINI <b>⚝</b> GROQ <b>⚝</b> CLAUDE <b>⚝</b> MCP SERVER <b>⚝</b> CLAUDE SKILL <b>⚝</b> CLI · TERMUX <b>⚝</b> DISCORD BOT <b>⚝</b> WEB <b>⚝</b> PRIVATE REPOS <b>⚝</b> IMP_DOCS <b>⚝</b> CI INCLUDED <b>⚝</b>&nbsp;</span>
+      <span>GITHUB MODELS <b>⚝</b> GEMINI <b>⚝</b> GROQ <b>⚝</b> CLAUDE <b>⚝</b> MCP SERVER <b>⚝</b> CLAUDE SKILL <b>⚝</b> CLI · TERMUX <b>⚝</b> DISCORD BOT <b>⚝</b> WEB <b>⚝</b> PRIVATE REPOS <b>⚝</b> IMP_DOCS <b>⚝</b> CI INCLUDED <b>⚝</b>&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ═══ STAT BAND (truthful, count-up) ═══ -->
+  <section class="wrap" aria-label="Grimoire at a glance">
+    <div class="stats">
+      <div class="stat"><span class="n" data-count="15" data-suffix="+">0</span><span class="l">Models</span></div>
+      <div class="stat"><span class="n" data-count="4">0</span><span class="l">Providers</span></div>
+      <div class="stat"><span class="n" data-count="5">0</span><span class="l">Surfaces</span></div>
+      <div class="stat"><span class="n" data-count="2">0</span><span class="l">Passes</span></div>
+      <div class="stat"><span class="n" data-count="0">0</span><span class="l">Backends · Sign-ups</span></div>
+    </div>
+  </section>
+
+  <!-- ═══ THE RITUAL ═══ -->
+  <section class="section" id="ritual">
+    <div class="wrap">
+      <p class="kicker" style="text-align:center">The ritual</p>
+      <h2 style="font-size:clamp(1.7rem,3.2vw,2.4rem);text-align:center;margin-bottom:1.8rem">Four movements. One repo.</h2>
+      <div class="rites">
+        <div class="rite"><h3>Speak</h3><p>“A Flask todo app with SQLite and a dark-mode UI.” Plain English is the entire spec.</p></div>
+        <div class="rite"><h3>Plan</h3><p>Pass one returns the architecture as structured JSON — repo name, stack, and every file with its purpose.</p></div>
+        <div class="rite"><h3>Conjure</h3><p>Pass two writes each file with the whole plan in context, so imports and structure truly line up.</p></div>
+        <div class="rite"><h3>Bind</h3><p>A private repo appears on your GitHub — committed via API with CI and <code>IMP_DOCS/</code> from the first commit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURES — exactly three, like the mock ═══ -->
+  <section class="section" id="features" style="padding-top:0">
+    <div class="wrap">
+      <div class="feat3">
+        <div class="gcard"><span class="ic">⚙️</span><h3>Infrastructure Included</h3>
+          <p>Every conjured repo ships runnable structure — Dockerfile, CI build-check, <code>HOW_TO_RUN.md</code> and a standardized <code>IMP_DOCS/</code> folder.</p></div>
+        <div class="gcard"><span class="ic">🔮</span><h3>Multi-Provider Support</h3>
+          <p>Access best-in-class models — switch between GitHub Models, Gemini, Groq and Claude per build. Only Claude needs its own key.</p></div>
+        <div class="gcard"><span class="ic">🌀</span><h3>One Engine, Every Surface</h3>
+          <p>Build from Claude, the MCP server, the CLI or Termux, Discord, or this site — the same core answers everywhere.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="section" style="text-align:center;padding-top:1rem">
+    <div class="wrap">
+      <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);max-width:22ch;margin:0 auto 1.5rem">Your next repo is one incantation away.</h2>
+      <div style="display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center">
+        <a class="btn btn-gold" href="conjure.html">Open the Conjure App ⚝</a>
+        <a class="btn btn-ghost" href="docs.html">Read the docs</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <nav aria-label="Footer">
+      <a href="docs.html">Documentation</a>
+      <a href="conjure.html">Conjure App</a>
+      <a href="community.html">Community</a>
+      <a href="https://github.com/Arnav1771/turmux_builder" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Arnav1771/turmux_builder/blob/main/TECHSPEC.md" target="_blank" rel="noopener">Tech Spec</a>
+      <a href="https://arnav1771.github.io/Arnav_Bhargava/" target="_blank" rel="noopener">Author</a>
+    </nav>
+    <span>© 2026 Grimoire MCP — free &amp; open-source.</span>
+  </div>
+</footer>
+
+<script src="portal.js"></script>
+<script src="aurum.js"></script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stealth Keqing — Index</title>
+<meta name="description" content="Everything built under the Stealth Keqing name. One index, every project.">
+<meta property="og:title" content="Stealth Keqing — Index">
+<meta property="og:description" content="Everything built under the Stealth Keqing name.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Chakra+Petch:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/*
+ * A console, not a brochure.
+ *
+ * The light in here comes from the content: two neons doing one job each -
+ * cyan for a thing that is up, magenta for a thing that is down - over a
+ * ground dark enough that both actually glow. Nothing else is allowed to be
+ * bright, because a page where everything glows is a page where nothing reads.
+ */
+:root{
+  --void:#05060d;
+  --panel:#0b0d18;
+  --panel-2:#10131f;
+  --edge:#1c2136;
+  --edge-hot:#2b3358;
+
+  --text:#e8ebf5;
+  --text-dim:#8b93ad;
+  --text-faint:#5a6180;
+
+  --cyan:#00e5ff;
+  --magenta:#ff2e88;
+  --violet:#a855ff;
+  --amber:#ffb020;
+
+  --sans:"Chakra Petch",ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;
+  --display:"Syne",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--void);color:var(--text);
+  font:400 15px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+
+/* ---------- the light behind everything ---------- */
+
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{
+  position:absolute;border-radius:50%;filter:blur(90px);opacity:.32;
+  will-change:transform;
+}
+.blob.a{width:56vw;height:56vw;left:-14vw;top:-18vw;background:radial-gradient(circle,var(--cyan),transparent 62%);animation:drift-a 26s ease-in-out infinite}
+.blob.b{width:48vw;height:48vw;right:-12vw;top:6vw;background:radial-gradient(circle,var(--magenta),transparent 62%);animation:drift-b 32s ease-in-out infinite}
+.blob.c{width:44vw;height:44vw;left:26vw;bottom:-20vw;background:radial-gradient(circle,var(--violet),transparent 62%);animation:drift-c 38s ease-in-out infinite}
+@keyframes drift-a{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(8vw,6vw,0) scale(1.12)}}
+@keyframes drift-b{0%,100%{transform:translate3d(0,0,0) scale(1.05)}50%{transform:translate3d(-7vw,9vw,0) scale(.92)}}
+@keyframes drift-c{0%,100%{transform:translate3d(0,0,0) scale(.95)}50%{transform:translate3d(6vw,-7vw,0) scale(1.1)}}
+
+/* A grid and a scanline, so the dark reads as a screen rather than a hole. */
+.grid-overlay{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--edge) 1px,transparent 1px),linear-gradient(90deg,var(--edge) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 78%);
+}
+.scan{
+  position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.35;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px);
+}
+
+.page{position:relative;z-index:3}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ---------- masthead ---------- */
+
+header.top{padding:86px 0 30px;text-align:center}
+.eyebrow{
+  font:500 11px/1 var(--mono);letter-spacing:.42em;text-transform:uppercase;
+  color:var(--cyan);margin:0 0 20px;
+  text-shadow:0 0 18px rgba(0,229,255,.55);
+}
+h1{
+  font:800 clamp(44px,9vw,104px)/.94 var(--display);
+  margin:0;letter-spacing:-.03em;text-wrap:balance;
+}
+h1 .g{
+  background:linear-gradient(96deg,var(--cyan),var(--violet) 46%,var(--magenta));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 26px rgba(168,85,255,.4));
+}
+.sub{color:var(--text-dim);font-size:17px;margin:20px auto 0;max-width:44ch;text-wrap:balance}
+
+.readout{
+  display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin:34px 0 0;
+  font-family:var(--mono);
+}
+.stat{text-align:center}
+.stat b{display:block;font:500 30px/1 var(--mono);color:var(--text)}
+.stat.up b{color:var(--cyan);text-shadow:0 0 20px rgba(0,229,255,.5)}
+.stat.down b{color:var(--magenta);text-shadow:0 0 20px rgba(255,46,136,.45)}
+.stat span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--text-faint)}
+
+/* ---------- controls ---------- */
+
+.controls{
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;
+  margin:42px 0 30px;
+}
+.find{position:relative;flex:1;max-width:400px;min-width:230px}
+.find input{
+  width:100%;font:400 14px/1 var(--sans);color:var(--text);
+  background:var(--panel);border:1px solid var(--edge);border-radius:10px;
+  padding:13px 15px 13px 40px;transition:border-color .2s,box-shadow .2s;
+}
+.find input::placeholder{color:var(--text-faint)}
+.find input:focus{
+  outline:none;border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(0,229,255,.13),0 0 26px rgba(0,229,255,.14);
+}
+.find svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--text-faint);fill:none;stroke-width:2}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  font:500 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-dim);background:var(--panel);
+  border:1px solid var(--edge);border-radius:999px;padding:10px 15px;cursor:pointer;
+  transition:color .2s,border-color .2s,box-shadow .2s,background .2s;
+}
+.chip:hover{color:var(--text);border-color:var(--edge-hot)}
+.chip[aria-pressed="true"]{
+  color:var(--void);background:var(--cyan);border-color:var(--cyan);
+  box-shadow:0 0 22px rgba(0,229,255,.4);
+}
+.chip:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+
+/* ---------- the cards ---------- */
+
+.deck{
+  display:grid;gap:16px;padding:0 0 90px;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+}
+.card{
+  position:relative;display:flex;flex-direction:column;gap:9px;
+  background:linear-gradient(160deg,var(--panel),var(--panel-2));
+  border:1px solid var(--edge);border-radius:14px;padding:20px;
+  text-decoration:none;color:inherit;overflow:hidden;
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),border-color .22s,box-shadow .22s;
+  animation:deal .5s cubic-bezier(.2,.7,.3,1) both;
+}
+@keyframes deal{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+
+/* The sweep is a pseudo-element so it costs nothing until something hovers. */
+.card::before{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
+  background:linear-gradient(120deg,transparent 28%,var(--accent,var(--cyan)) 50%,transparent 72%);
+  background-size:280% 100%;background-position:110% 0;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .22s;pointer-events:none;
+}
+.card:hover,.card:focus-visible{
+  transform:translateY(-4px);border-color:var(--edge-hot);
+  box-shadow:0 16px 44px -20px rgba(0,0,0,.9),0 0 32px -14px var(--accent,var(--cyan));
+  outline:none;
+}
+.card:hover::before,.card:focus-visible::before{opacity:1;animation:sweep 1.05s ease forwards}
+@keyframes sweep{to{background-position:-40% 0}}
+
+.card-top{display:flex;align-items:center;gap:9px}
+.dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--magenta);box-shadow:0 0 10px var(--magenta)}
+.card.on .dot{background:var(--cyan);box-shadow:0 0 12px var(--cyan);animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.45}50%{opacity:1}}
+.card h2{font:600 17px/1.25 var(--sans);margin:0;letter-spacing:.01em}
+.card p{margin:0;color:var(--text-dim);font-size:13.5px;line-height:1.55;flex:1}
+.meta{
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  font:400 10.5px/1 var(--mono);color:var(--text-faint);
+  letter-spacing:.08em;text-transform:uppercase;margin-top:4px;
+}
+.tag{border:1px solid var(--edge);border-radius:5px;padding:4px 7px}
+.card.on .tag.state{color:var(--cyan);border-color:rgba(0,229,255,.36)}
+.card.off .tag.state{color:var(--magenta);border-color:rgba(255,46,136,.34)}
+
+.nothing{
+  grid-column:1/-1;text-align:center;color:var(--text-faint);
+  padding:66px 0;font-family:var(--mono);font-size:13px;
+}
+
+/* ---------- the other door ---------- */
+
+.crossing{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  border:1px solid var(--edge);border-radius:16px;padding:26px 28px;margin:0 0 70px;
+  background:linear-gradient(120deg,rgba(168,85,255,.09),rgba(255,176,32,.06));
+  position:relative;overflow:hidden;
+}
+.crossing::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 40%,rgba(255,176,32,.14) 50%,transparent 60%);
+  background-size:250% 100%;animation:shine 6s linear infinite;
+}
+@keyframes shine{from{background-position:130% 0}to{background-position:-60% 0}}
+.crossing div{position:relative;z-index:1}
+.crossing h3{font:800 24px/1.15 var(--display);margin:0 0 5px;color:var(--amber)}
+.crossing p{margin:0;color:var(--text-dim);font-size:14px}
+.enter{
+  position:relative;z-index:1;flex:none;
+  font:600 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--void);background:var(--amber);border:0;border-radius:9px;
+  padding:14px 22px;text-decoration:none;
+  box-shadow:0 0 30px rgba(255,176,32,.36);transition:transform .16s,box-shadow .16s;
+}
+.enter:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(255,176,32,.55)}
+
+footer{
+  border-top:1px solid var(--edge);padding:34px 0 60px;text-align:center;
+  color:var(--text-faint);font:400 12px/1.7 var(--mono);
+}
+footer a{color:var(--text-dim);text-decoration:none}
+footer a:hover{color:var(--cyan)}
+
+@media (prefers-reduced-motion: reduce){
+  .blob,.crossing::after,.card.on .dot{animation:none}
+  .card{animation:none}
+  .card:hover::before{animation:none}
+  html{scroll-behavior:auto}
+}
+@media (max-width:640px){
+  header.top{padding:56px 0 22px}
+  .readout{gap:18px}
+  .deck{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <span class="blob a"></span><span class="blob b"></span><span class="blob c"></span>
+</div>
+<div class="grid-overlay" aria-hidden="true"></div>
+<div class="scan" aria-hidden="true"></div>
+
+<div class="page">
+  <header class="top">
+    <div class="wrap">
+      <p class="eyebrow">Stealth Keqing</p>
+      <h1>Everything <span class="g">built</span></h1>
+      <p class="sub">Every project, one index. Pick one and it opens.</p>
+
+      <div class="readout" id="readout" aria-live="polite">
+        <div class="stat"><b id="n-total">0</b><span>projects</span></div>
+        <div class="stat up"><b id="n-live">0</b><span>live</span></div>
+        <div class="stat down"><b id="n-off">0</b><span>hosted here</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="controls">
+      <label class="find">
+        <span class="sr-only" style="position:absolute;left:-9999px">Search projects</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="find" type="search" placeholder="Search 33 projects…" autocomplete="off" spellcheck="false">
+      </label>
+      <div class="chips" role="group" aria-label="Filter">
+        <button class="chip" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" data-filter="live" aria-pressed="false">Live</button>
+        <button class="chip" data-filter="here" aria-pressed="false">Hosted here</button>
+      </div>
+    </div>
+
+    <main class="deck" id="deck"></main>
+
+    <a class="crossing" href="https://arnav1771.github.io/galleries/" style="text-decoration:none;color:inherit">
+      <div>
+        <h3>Photo galleries</h3>
+        <p>Prinda, SAM, ANNO — the archives live on their own site.</p>
+      </div>
+      <span class="enter">Open galleries</span>
+    </a>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <p style="margin:0"><a href="https://github.com/Arnav1771">github.com/Arnav1771</a></p>
+      <p style="margin:6px 0 0">Published by Stealth Keqing</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+/*
+ * The page draws itself from data.json, so adding a project is a data change
+ * rather than an edit here.
+ *
+ * Two states worth distinguishing, and the colour carries it: a project whose
+ * own site is up (cyan, and the link goes there), and one whose site is down
+ * while the plan is sorted out, served from a copy kept here (magenta). Both
+ * open something - nothing on this page is a dead end.
+ */
+const deck = document.getElementById("deck");
+const find = document.getElementById("find");
+const chips = [...document.querySelectorAll(".chip")];
+
+const ACCENTS = ["#00e5ff", "#ff2e88", "#a855ff", "#ffb020", "#4ade80"];
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+let all = [];
+let filter = "all";
+
+function tint(seed) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i += 1) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  return ACCENTS[Math.abs(h) % ACCENTS.length];
+}
+
+function cardFor(p, i) {
+  const href = p.live ? p.own : p.here;
+  return `
+    <a class="card ${p.live ? "on" : "off"}" href="${esc(href)}"
+       style="--accent:${tint(p.slug)};animation-delay:${Math.min(i * 26, 620)}ms">
+      <span class="card-top"><i class="dot"></i><h2>${esc(p.title)}</h2></span>
+      <p>${esc(p.desc || "No description yet.")}</p>
+      <span class="meta">
+        <span class="tag state">${p.live ? "live" : "hosted here"}</span>
+        ${p.lang ? `<span class="tag">${esc(p.lang)}</span>` : ""}
+        ${p.pushed ? `<span>${esc(p.pushed)}</span>` : ""}
+      </span>
+    </a>`;
+}
+
+function shown() {
+  const q = find.value.trim().toLowerCase();
+  return all.filter((p) => {
+    if (filter === "live" && !p.live) return false;
+    if (filter === "here" && p.live) return false;
+    if (!q) return true;
+    return (p.title + " " + p.desc + " " + p.name + " " + p.lang).toLowerCase().includes(q);
+  });
+}
+
+function draw() {
+  const list = shown();
+  deck.innerHTML = list.length
+    ? list.map(cardFor).join("")
+    : `<p class="nothing">Nothing matches “${esc(find.value.trim())}”.</p>`;
+}
+
+/** Numbers that arrive rather than appear. Skipped when motion is unwelcome. */
+function countTo(el, target) {
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (still || target === 0) { el.textContent = String(target); return; }
+  const started = performance.now();
+  const step = (now) => {
+    const t = Math.min((now - started) / 700, 1);
+    el.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 3))));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+find.addEventListener("input", draw);
+for (const chip of chips) {
+  chip.addEventListener("click", () => {
+    filter = chip.dataset.filter;
+    for (const c of chips) c.setAttribute("aria-pressed", String(c === chip));
+    draw();
+  });
+}
+
+fetch("data.json")
+  .then((r) => r.json())
+  .then((d) => {
+    all = d.projects ?? [];
+    find.placeholder = `Search ${all.length} projects…`;
+    countTo(document.getElementById("n-total"), all.length);
+    countTo(document.getElementById("n-live"), all.filter((p) => p.live).length);
+    countTo(document.getElementById("n-off"), all.filter((p) => !p.live).length);
+    draw();
+  })
+  .catch(() => {
+    deck.innerHTML = `<p class="nothing">The index could not be loaded.</p>`;
+  });
+</script>
+
+</body>
+</html>
