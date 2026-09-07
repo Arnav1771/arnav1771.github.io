@@ -565,8 +565,8 @@
     '  float d2 = max(dot(N, L2), 0.0);',
     '  float sky = N.y * 0.5 + 0.5;',
     // two palettes: quarried graphite  ->  charged core
-    '  vec3 darkA = vec3(0.026, 0.028, 0.034);',
-    '  vec3 liteA = vec3(0.330, 0.340, 0.365);',
+    '  vec3 darkA = vec3(0.115, 0.113, 0.122);',
+    '  vec3 liteA = vec3(0.720, 0.706, 0.678);',
     '  vec3 darkB = vec3(0.020, 0.006, 0.013);',
     '  vec3 liteB = vec3(0.245, 0.055, 0.082);',
     '  vec3 dk = mix(darkA, darkB, uTheme);',
