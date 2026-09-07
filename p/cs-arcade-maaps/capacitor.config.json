@@ -1,9 +1,0 @@
-{
-  "appId": "com.arcade.3draycaster",
-  "appName": "3D Raycaster",
-  "webDir": ".",
-  "bundledWebRuntime": false,
-  "server": {
-    "androidScheme": "https"
-  }
-}

@@ -81,12 +81,12 @@
    "name": "cs-arcade-maaps",
    "slug": "cs-arcade-maaps",
    "title": "CS Arcade",
-   "desc": "Fifteen playable games that teach computer-science ideas.",
+   "desc": "Thirty-two phone games, each teaching a computer-science idea.",
    "lang": "JavaScript",
    "pushed": "2026-08-24",
-   "own": "https://arnav1771.github.io/cs-arcade-maaps/",
-   "here": "p/cs-arcade-maaps/",
-   "live": false
+   "own": "https://arnav1771.github.io/arcade/",
+   "here": "https://arnav1771.github.io/arcade/",
+   "live": true
   },
   {
    "name": "DADI_DADU_ANNIVERSARY",
