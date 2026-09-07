@@ -1,1 +1,15 @@
+# python
+__pycache__/
+*.py[cod]
+
+# editors / OS
+.vscode/
+.idea/
 .DS_Store
+Thumbs.db
+*.swp
+
+# local scratch
+*.log
+.cache/
+tmp/
