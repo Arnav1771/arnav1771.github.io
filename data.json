@@ -120,7 +120,8 @@
    "pushed": "2026-05-31",
    "own": "https://arnav1771.github.io/Dunki/",
    "here": "p/dunki/",
-   "live": false
+   "live": false,
+   "unbuilt": true
   },
   {
    "name": "fahh-ide",
@@ -340,7 +341,8 @@
    "pushed": "2026-08-31",
    "own": "https://arnav1771.github.io/swift-record/",
    "here": "p/swift-record/",
-   "live": false
+   "live": false,
+   "unbuilt": true
   },
   {
    "name": "turmux_builder",
@@ -384,7 +386,8 @@
    "pushed": "2025-01-13",
    "own": "https://arnav1771.github.io/WildWorld/",
    "here": "p/wildworld/",
-   "live": false
+   "live": false,
+   "unbuilt": true
   }
  ]
 }
