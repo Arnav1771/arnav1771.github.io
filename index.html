@@ -258,7 +258,7 @@ footer a:hover{color:var(--cyan)}
       <div class="readout" id="readout" aria-live="polite">
         <div class="stat"><b id="n-total">0</b><span>projects</span></div>
         <div class="stat up"><b id="n-live">0</b><span>live</span></div>
-        <div class="stat down"><b id="n-off">0</b><span>hosted here</span></div>
+        <div class="stat down"><b id="n-off">0</b><span>site offline</span></div>
       </div>
     </div>
   </header>
@@ -273,7 +273,7 @@ footer a:hover{color:var(--cyan)}
       <div class="chips" role="group" aria-label="Filter">
         <button class="chip" data-filter="all" aria-pressed="true">All</button>
         <button class="chip" data-filter="live" aria-pressed="false">Live</button>
-        <button class="chip" data-filter="here" aria-pressed="false">Hosted here</button>
+        <button class="chip" data-filter="here" aria-pressed="false">Offline</button>
       </div>
     </div>
 
@@ -323,14 +323,14 @@ function tint(seed) {
 }
 
 function cardFor(p, i) {
-  const href = p.live ? p.own : p.here;
+  const href = p.own;
   return `
     <a class="card ${p.live ? "on" : "off"}" href="${esc(href)}"
        style="--accent:${tint(p.slug)};animation-delay:${Math.min(i * 26, 620)}ms">
       <span class="card-top"><i class="dot"></i><h2>${esc(p.title)}</h2></span>
       <p>${esc(p.desc || "No description yet.")}</p>
       <span class="meta">
-        <span class="tag state">${p.live ? "live" : "hosted here"}</span>
+        <span class="tag state">${p.live ? "live" : "site offline"}</span>
         ${p.lang ? `<span class="tag">${esc(p.lang)}</span>` : ""}
         ${p.pushed ? `<span>${esc(p.pushed)}</span>` : ""}
       </span>
