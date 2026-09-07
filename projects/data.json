@@ -156,50 +156,6 @@
    "live": false
   },
   {
-   "name": "Mern_BS_JS",
-   "slug": "mern-bs-js",
-   "title": "MERN \u00b7 Bootstrap",
-   "desc": "Coursework.",
-   "lang": "HTML",
-   "pushed": "2023-10-08",
-   "own": "https://arnav1771.github.io/Mern_BS_JS/",
-   "here": "https://arnav1771.github.io/Mern_BS_JS/",
-   "live": false
-  },
-  {
-   "name": "Mern_Task_HTML_CSS",
-   "slug": "mern-task-html-css",
-   "title": "MERN \u00b7 HTML/CSS",
-   "desc": "Coursework.",
-   "lang": "HTML",
-   "pushed": "2023-10-08",
-   "own": "https://arnav1771.github.io/Mern_Task_HTML_CSS/",
-   "here": "https://arnav1771.github.io/Mern_Task_HTML_CSS/",
-   "live": false
-  },
-  {
-   "name": "Mern_Movie_Booking_task",
-   "slug": "mern-movie-booking-task",
-   "title": "MERN \u00b7 Movie Booking",
-   "desc": "Coursework.",
-   "lang": "HTML",
-   "pushed": "2023-11-23",
-   "own": "https://arnav1771.github.io/Mern_Movie_Booking_task/",
-   "here": "https://arnav1771.github.io/Mern_Movie_Booking_task/",
-   "live": false
-  },
-  {
-   "name": "Mern_Stack_Task",
-   "slug": "mern-stack-task",
-   "title": "MERN \u00b7 Stack Task",
-   "desc": "Coursework.",
-   "lang": "HTML",
-   "pushed": "2023-10-06",
-   "own": "https://arnav1771.github.io/Mern_Stack_Task/",
-   "here": "https://arnav1771.github.io/Mern_Stack_Task/",
-   "live": false
-  },
-  {
    "name": "MyanimeList",
    "slug": "myanimelist",
    "title": "MyAnimeList",
@@ -274,17 +230,6 @@
    "pushed": "2026-08-16",
    "own": "https://arnav1771.github.io/Repo_Analyizer/",
    "here": "https://arnav1771.github.io/Repo_Analyizer/",
-   "live": false
-  },
-  {
-   "name": "My_Resume",
-   "slug": "my-resume",
-   "title": "Resume",
-   "desc": "Curriculum vitae.",
-   "lang": "HTML",
-   "pushed": "2023-11-05",
-   "own": "https://arnav1771.github.io/My_Resume/",
-   "here": "https://arnav1771.github.io/My_Resume/",
    "live": false
   },
   {
