@@ -13,14 +13,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/archive.css">
+<link rel="stylesheet" href="assets/signal.css">
 </head>
 <body>
 
-<div class="mesh" aria-hidden="true"></div>
-<div class="halftone" aria-hidden="true"></div>
-<div class="scan" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+<!--
+  The shell holds the chrome and nothing else. Whichever world is mounted builds
+  the whole of #stage, including its own atmosphere layers - which is why the
+  two no longer look like one page with a filter over it.
+-->
 
 <div class="crossing" id="crossing" aria-hidden="true">
   <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
@@ -42,100 +45,21 @@
   </div>
 </header>
 
-<main class="page">
+<!--
+  The rail sits outside the index bar on purpose. That bar blends with
+  difference so it stays legible over both worlds, and a blended group takes
+  its children with it - inside the header the red rail came out cyan.
+-->
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
 
-  <section class="opening" id="opening">
-    <div class="field">
-      <p class="eyebrow">Read off the commit log, not the r&eacute;sum&eacute;</p>
-
-      <h1 class="statement" id="statement">
-        <span class="line"><span>It did not</span></span>
-        <span class="line"><span>grow.</span></span>
-        <span class="line"><span>It went</span></span>
-        <span class="line step"><span class="hit">vertical.</span></span>
-      </h1>
-
-      <p class="claim">
-        Not a resume, and not a list of skills. Every repository started, in the
-        order it was started, and the commit history behind the ones still on
-        disk. The shape further down this page is the argument.
-      </p>
-
-      <p class="stamp" id="stamp">
-        Source &mdash; GitHub<br>
-        Compiled &mdash; <span data-compiled>&mdash;</span><br>
-        Method &mdash; the commit log, not claims
-      </p>
-
-      <div class="object" aria-hidden="true"><canvas id="monument"></canvas></div>
-
-      <div class="figures" id="figures"></div>
-    </div>
-  </section>
-
-  <section class="chapter" id="ramp">
-    <div class="field">
-      <div class="marker rise"><b>02</b>The ramp</div>
-      <h2 class="title rise">Something<br><em>happened</em> here</h2>
-      <p class="note rise">
-        Commits by month, with repositories started stacked above the line.
-        Nothing much for a long while, and then a wall.
-      </p>
-      <div class="ramp rise" id="ramp-viz"></div>
-    </div>
-  </section>
-
-  <section class="chapter" id="years">
-    <div class="field">
-      <div class="marker rise"><b>03</b>Years</div>
-      <h2 class="title rise">Chapters, in<br>the order they <em>fell</em></h2>
-      <p class="note rise">Each year named for what the record shows, not for how it felt.</p>
-      <div class="arcs rise" id="arcs"></div>
-    </div>
-  </section>
-
-  <section class="chapter" id="arsenal">
-    <div class="field">
-      <div class="marker rise"><b>04</b>Written in</div>
-      <h2 class="title rise">What it was<br><em>written</em> in</h2>
-      <p class="note rise">By repository count. Hover a language to see what it went into.</p>
-      <div class="arsenal rise" id="arsenal-list"></div>
-    </div>
-  </section>
-
-  <section class="chapter" id="archive">
-    <div class="field">
-      <div class="marker rise"><b>05</b>Archive</div>
-      <h2 class="title rise">The <em>archive</em></h2>
-      <p class="note rise">
-        Every repository as an artifact rather than a card. Room on the page
-        follows weight in the record.
-      </p>
-      <div class="archive rise" id="archive-list">
-        <div class="filters" id="filters" role="group" aria-label="Filter the archive"></div>
-        <div id="items"></div>
-        <button class="more" id="more" type="button" hidden>Show more</button>
-      </div>
-    </div>
-  </section>
-
-  <footer class="source">
-    <div class="field">
-      <p class="big">The work<br>continues.</p>
-      <div class="cols">
-        <div><b>Source</b><a href="https://github.com/Arnav1771">github.com/Arnav1771</a></div>
-        <div><b>Archive</b><a href="projects/">Project index</a><br><a href="galleries/">Galleries</a></div>
-        <div><b>Compiled from</b>the commit log</div>
-        <div><b>Published by</b>Stealth Keqing</div>
-      </div>
-    </div>
-  </footer>
-
-</main>
+<main id="stage"></main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="assets/story.js"></script>
 <script src="assets/monument.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/archive.js"></script>
+<script src="assets/signal.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>

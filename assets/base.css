@@ -1,0 +1,218 @@
+/*
+ * base.css - the shell, and only the shell.
+ *
+ * The page is not one design with two palettes. It is two renderers over one
+ * record: archive.js builds the professional world, signal.js builds the other,
+ * and switching tears one down and builds the other. What lives here is
+ * everything that survives that switch - the reset, the tokens both worlds read
+ * for the chrome, the fixed index bar, the world switcher, and the crossing
+ * that covers the swap.
+ *
+ * Nothing in here styles the contents of #stage. That belongs to whichever
+ * world is currently mounted, in archive.css or signal.css.
+ */
+
+:root,
+:root[data-world="professional"]{--paper:#F3F1EC;
+  --paper-2:#EDEAE3;
+  --paper-3:#E4E0D7;
+  --ink:#080B12;
+  --ink-2:#2A3140;
+  --muted:#6B7280;
+  --faint:#9A9689;
+  --rule:#D6D1C6;
+  --red:#E51B3E;
+  --cyan:#0E7490;
+
+  --bg:var(--paper);
+  --fg:var(--ink);
+  --accent:var(--red);
+
+  --display:"Oswald",ui-sans-serif,system-ui,sans-serif;
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Consolas,monospace;
+
+  --display-weight:700;
+  --display-track:-0.015em;
+  --panel:transparent;
+  --panel-line:var(--rule);
+  --grain-opacity:.5;
+  --scan-opacity:0;
+  --halftone-opacity:0;
+  --edge-radius:0px;}
+
+:root[data-world="anime"]{--paper:#090A0F;
+  --paper-2:#0E1018;
+  --paper-3:#141826;
+  --ink:#F2F4FF;
+  --ink-2:#C6CBE6;
+  --muted:#8891B4;
+  --faint:#5A6288;
+  --rule:#232A45;
+  --red:#FF1744;
+  --cyan:#00D9FF;
+  --magenta:#FF2DAA;
+  --violet:#7C4DFF;
+
+  --bg:var(--paper);
+  --fg:var(--ink);
+  --accent:var(--red);
+
+  --display-weight:700;
+  --display-track:0.005em;
+  --panel:rgba(20,24,38,.6);
+  --panel-line:#2C3355;
+  --grain-opacity:.14;
+  --scan-opacity:.5;
+  --halftone-opacity:.16;
+  --edge-radius:2px;}
+
+*{box-sizing:border-box}
+
+[hidden]{display:none!important}
+
+html{-webkit-text-size-adjust:100%}
+
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:400 16px/1.6 var(--sans);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:background .8s cubic-bezier(.7,0,.2,1),color .8s cubic-bezier(.7,0,.2,1);}
+
+a{color:inherit}
+
+::selection{background:var(--accent);color:var(--bg)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.mono{font-family:var(--mono)}
+
+.index{position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;align-items:baseline;gap:clamp(14px,2.6vw,40px);
+  padding:18px clamp(18px,3.4vw,54px);
+  mix-blend-mode:difference;color:#fff;
+  font-family:var(--mono);}
+
+:root[data-world="anime"] .index{mix-blend-mode:normal;color:var(--ink)}
+
+.index .who{font:var(--display-weight) 19px/1 var(--display);
+  letter-spacing:.14em;text-transform:uppercase;}
+
+.index ol{list-style:none;display:flex;gap:clamp(10px,1.7vw,26px);margin:0;padding:0;flex-wrap:wrap}
+
+.index a{font:400 10.5px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;opacity:.62;transition:opacity .2s;}
+
+.index a:hover,.index a:focus-visible{opacity:1}
+
+.index .num{opacity:.45;margin-right:5px}
+
+.worlds{margin-left:auto;display:flex;align-items:center;gap:10px}
+
+.worlds button{font:400 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  background:none;border:1px solid currentColor;color:inherit;
+  padding:8px 12px;cursor:pointer;opacity:.55;transition:opacity .2s,background .2s;
+  border-radius:var(--edge-radius);}
+
+.worlds button[aria-pressed="true"]{opacity:1;background:currentColor}
+
+.worlds button[aria-pressed="true"] span{mix-blend-mode:difference;color:#000;filter:invert(1);}
+
+.worlds button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.crossing{position:fixed;inset:0;z-index:90;pointer-events:none;
+  display:grid;grid-template-rows:repeat(7,1fr);}
+
+.crossing i{background:var(--accent);transform:scaleX(0);transform-origin:left;}
+
+.crossing.in i{animation:wipe-in .5s cubic-bezier(.7,0,.2,1) forwards}
+
+.crossing.out i{animation:wipe-out .5s cubic-bezier(.7,0,.2,1) forwards}
+
+.crossing i:nth-child(1){animation-delay:0ms}
+
+.crossing i:nth-child(2){animation-delay:40ms}
+
+.crossing i:nth-child(3){animation-delay:80ms}
+
+.crossing i:nth-child(4){animation-delay:120ms}
+
+.crossing i:nth-child(5){animation-delay:160ms}
+
+.crossing i:nth-child(6){animation-delay:200ms}
+
+.crossing i:nth-child(7){animation-delay:240ms}
+
+@keyframes wipe-in{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+@keyframes wipe-out{from{transform:scaleX(1);transform-origin:right}to{transform:scaleX(0);transform-origin:right}}
+
+.crossing-word{position:fixed;inset:0;z-index:91;display:grid;place-items:center;pointer-events:none;
+  font:var(--display-weight) clamp(30px,7vw,96px)/1 var(--display);
+  letter-spacing:.2em;text-transform:uppercase;color:var(--bg);
+  opacity:0;transition:opacity .2s;}
+
+.crossing-word.on{opacity:1}
+
+.rise{opacity:0;transform:translateY(30px)}
+
+.rise.go{opacity:1;transform:none;transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rise{opacity:1;transform:none}
+}
+
+@media (max-width:700px){
+  .index{gap:10px;padding:14px 18px;flex-wrap:wrap}
+  .index ol{order:3;width:100%;gap:12px;padding-top:8px}
+  .index .who{font-size:16px}
+  .worlds{margin-left:auto}
+  .worlds button{padding:7px 9px;font-size:9px}
+}
+
+/* ---------------------------------------------------------------- reading rail */
+
+/* How far through the record you are. It sits under the index bar, hairline
+   thin, and it is the one piece of chrome both worlds share - a folio mark
+   rather than a scrollbar. */
+.progress{
+  position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--rule);opacity:.5;
+}
+.progress i{
+  display:block;height:100%;width:0;background:var(--accent);
+  transform-origin:left;
+}
+
+/* The stage swaps worlds; nothing should be mid-scroll when it does. */
+#stage{display:block}
+.stage-fault{
+  margin:0;padding:32vh clamp(18px,6vw,80px);
+  font:400 15px/1.7 var(--sans);color:var(--muted);max-width:46ch;
+}
+
+/* ---------------------------------------------------------------- reading rail */
+
+/* How far through the record you are. It sits under the index bar, hairline
+   thin, and it is the one piece of chrome both worlds share - a folio mark
+   rather than a scrollbar. */
+.progress{
+  position:fixed;left:0;right:0;z-index:41;
+  top:calc(var(--index-h,58px) - 1px);height:1px;
+  background:var(--rule);opacity:.45;pointer-events:none;
+}
+.progress i{
+  display:block;height:100%;width:0;background:var(--accent);
+}
+
+/* The stage is what gets replaced when the world changes. */
+#stage{display:block}
+.stage-fault{
+  margin:0;padding:32vh clamp(18px,6vw,80px);
+  font:400 15px/1.7 var(--sans);color:var(--muted);max-width:46ch;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .progress{display:none}
+}
