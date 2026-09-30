@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" data-world="professional">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arnav Bhargava — Repository Archive</title>
+<meta name="description" content="Not a resume. The history of what was actually built — every repository, every commit, read off the log.">
+<meta name="theme-color" content="#F3F1EC">
+<meta property="og:title" content="Arnav Bhargava — Repository Archive">
+<meta property="og:description" content="This isn't a resume. This is the history of what I actually built.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/archive.css">
+<link rel="stylesheet" href="assets/signal.css">
+</head>
+<body>
+
+<!--
+  The shell holds the chrome and nothing else. Whichever world is mounted builds
+  the whole of #stage, including its own atmosphere layers - which is why the
+  two no longer look like one page with a filter over it.
+-->
+
+<div class="crossing" id="crossing" aria-hidden="true">
+  <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+</div>
+<div class="crossing-word" id="crossing-word" aria-hidden="true"></div>
+
+<header class="index">
+  <span class="who">Arnav</span>
+  <ol>
+    <li><a href="#opening"><span class="num">01</span>Story</a></li>
+    <li><a href="#ramp"><span class="num">02</span>Ramp</a></li>
+    <li><a href="#years"><span class="num">03</span>Years</a></li>
+    <li><a href="#arsenal"><span class="num">04</span>Written in</a></li>
+    <li><a href="#archive"><span class="num">05</span>Archive</a></li>
+  </ol>
+  <div class="worlds" role="group" aria-label="Visual world">
+    <button type="button" data-world="professional" aria-pressed="true"><span>Archive</span></button>
+    <button type="button" data-world="anime" aria-pressed="false"><span>Signal</span></button>
+  </div>
+</header>
+
+<!--
+  The rail sits outside the index bar on purpose. That bar blends with
+  difference so it stays legible over both worlds, and a blended group takes
+  its children with it - inside the header the red rail came out cyan.
+-->
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<main id="stage"></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="assets/story.js"></script>
+<script src="assets/monument.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/archive.js"></script>
+<script src="assets/signal.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
