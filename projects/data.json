@@ -266,6 +266,17 @@
    "live": false
   },
   {
+   "name": "stealth-keqing",
+   "slug": "stealth-keqing",
+   "title": "Stealth Keqing",
+   "desc": "The product hub: every tool I ship, what changed lately, an updates feed, and release emails you can sign up for.",
+   "lang": "Python",
+   "pushed": "2026-11-05",
+   "own": "https://natsume.duckdns.org/",
+   "here": "https://natsume.duckdns.org/",
+   "live": true
+  },
+  {
    "name": "Stealth_Translator",
    "slug": "stealth-translator",
    "title": "Stealth Translator",
