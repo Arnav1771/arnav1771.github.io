@@ -4,7 +4,7 @@
    "name": "AgentDeck",
    "slug": "agentdeck",
    "title": "AgentDeck",
-   "desc": "Control tower for AI coding agents: live web + TUI dashboard of every AI session on your machine — status, auto/manual mode, token and credit burn, and a loud waiting-for-input alert.",
+   "desc": "Control tower for AI coding agents: live web + TUI dashboard of every AI session on your machine \u2014 status, auto/manual mode, token and credit burn, and a loud waiting-for-input alert.",
    "lang": "TypeScript",
    "pushed": "2026-08-31",
    "own": "https://agentdeck-arnavs-projects-361d5c08.vercel.app",
@@ -23,14 +23,14 @@
    "live": false
   },
   {
-   "name": "Ai-waifu",
-   "slug": "ai-waifu",
-   "title": "Waifu Studio",
-   "desc": "Customisable AI character studio with a desktop shell.",
-   "lang": "Python",
-   "pushed": "2026-08-14",
-   "own": "https://waifu-studio-arnavs-projects-361d5c08.vercel.app",
-   "here": "https://waifu-studio-arnavs-projects-361d5c08.vercel.app",
+   "name": "Team_Daddies_AgroTech",
+   "slug": "team_daddies_agrotech",
+   "title": "AgroTech",
+   "desc": "A team project.",
+   "lang": "HTML",
+   "pushed": "2023-04-16",
+   "own": "https://arnav1771.github.io/Team_Daddies_AgroTech/",
+   "here": "https://arnav1771.github.io/Team_Daddies_AgroTech/",
    "live": true
   },
   {
@@ -53,17 +53,6 @@
    "pushed": "2026-07-25",
    "own": "https://arnav1771.github.io/Arch_Rice/",
    "here": "https://arnav1771.github.io/Arch_Rice/",
-   "live": false
-  },
-  {
-   "name": "Arnav_Bhargava",
-   "slug": "arnav-bhargava",
-   "title": "Portfolio",
-   "desc": "Arnav Portfolio Website",
-   "lang": "HTML",
-   "pushed": "2026-07-14",
-   "own": "https://arnav1771.github.io/Arnav_Bhargava/",
-   "here": "https://arnav1771.github.io/Arnav_Bhargava/",
    "live": false
   },
   {
@@ -114,7 +103,7 @@
    "name": "document-editor-and-converter",
    "slug": "document-editor-and-converter",
    "title": "Document Editor",
-   "desc": "A web-based PDF editor and document manipulation tool with features like Docx to PDF conversion, image format conversion, document compression, and PDF combining. | 🚀 Live: https://document-editor-and-converter.vercel.app/#/",
+   "desc": "A web-based PDF editor and document manipulation tool with features like Docx to PDF conversion, image format conversion, document compression, and PDF combining. | \ud83d\ude80 Live: https://document-editor-and-converter.vercel.app/#/",
    "lang": "TypeScript",
    "pushed": "2026-08-31",
    "own": "https://arnav1771.github.io/document-editor-and-converter/",
@@ -145,17 +134,6 @@
    "live": true
   },
   {
-   "name": "grimoire-MCP",
-   "slug": "grimoire-mcp",
-   "title": "Grimoire",
-   "desc": "Generate a whole application from a description, bring your own keys.",
-   "lang": "HTML",
-   "pushed": "2026-08-07",
-   "own": "https://grimoire-arnavs-projects-361d5c08.vercel.app",
-   "here": "https://grimoire-arnavs-projects-361d5c08.vercel.app",
-   "live": true
-  },
-  {
    "name": "multi-platform-game-launcher",
    "slug": "multi-platform-game-launcher",
    "title": "Game Launcher",
@@ -165,6 +143,17 @@
    "own": "https://arnav1771.github.io/multi-platform-game-launcher/",
    "here": "https://arnav1771.github.io/multi-platform-game-launcher/",
    "live": false
+  },
+  {
+   "name": "grimoire-MCP",
+   "slug": "grimoire-mcp",
+   "title": "Grimoire",
+   "desc": "Generate a whole application from a description, bring your own keys.",
+   "lang": "HTML",
+   "pushed": "2026-08-07",
+   "own": "https://grimoire-arnavs-projects-361d5c08.vercel.app",
+   "here": "https://grimoire-arnavs-projects-361d5c08.vercel.app",
+   "live": true
   },
   {
    "name": "MyanimeList",
@@ -197,6 +186,17 @@
    "pushed": "2026-08-14",
    "own": "https://arnav1771.github.io/Popup_pop/",
    "here": "https://arnav1771.github.io/Popup_pop/",
+   "live": false
+  },
+  {
+   "name": "Arnav_Bhargava",
+   "slug": "arnav-bhargava",
+   "title": "Portfolio",
+   "desc": "Arnav Portfolio Website",
+   "lang": "HTML",
+   "pushed": "2026-07-14",
+   "own": "https://arnav1771.github.io/Arnav_Bhargava/",
+   "here": "https://arnav1771.github.io/Arnav_Bhargava/",
    "live": false
   },
   {
@@ -299,17 +299,6 @@
    "live": true
   },
   {
-   "name": "Team_Daddies_AgroTech",
-   "slug": "team_daddies_agrotech",
-   "title": "AgroTech",
-   "desc": "A team project.",
-   "lang": "HTML",
-   "pushed": "2023-04-16",
-   "own": "https://arnav1771.github.io/Team_Daddies_AgroTech/",
-   "here": "https://arnav1771.github.io/Team_Daddies_AgroTech/",
-   "live": true
-  },
-  {
    "name": "turmux_builder",
    "slug": "turmux-builder",
    "title": "Turmux Builder",
@@ -330,6 +319,17 @@
    "own": "https://arnav1771.github.io/vscode-voice-transcript-helper/",
    "here": "https://arnav1771.github.io/vscode-voice-transcript-helper/",
    "live": false
+  },
+  {
+   "name": "Ai-waifu",
+   "slug": "ai-waifu",
+   "title": "Waifu Studio",
+   "desc": "Customisable AI character studio with a desktop shell.",
+   "lang": "Python",
+   "pushed": "2026-08-14",
+   "own": "https://waifu-studio-arnavs-projects-361d5c08.vercel.app",
+   "here": "https://waifu-studio-arnavs-projects-361d5c08.vercel.app",
+   "live": true
   },
   {
    "name": "WildWorld",
